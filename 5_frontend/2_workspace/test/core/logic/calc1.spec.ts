@@ -1,7 +1,7 @@
 import { expect, test, beforeEach, describe } from '@jest/globals';
 
-import { CalculatorImpl, ICalculator } from "../src/app/core";
-import { MapSamples } from '../src/app/0shared';
+import { CalculatorImpl, ICalculator } from "../../../src/app/core";
+import { MapSamples } from '../../../src/app/0shared';
 
 
 
@@ -22,10 +22,6 @@ describe("ICalculator", () => {
     calc = new CalculatorImpl();
     calc.setData(samplesRows1);
   })
-
-  test("hello", () => {
-    expect(calc.hello("foo")).toEqual("Hello foo");
-  });
 
   test("calcTotalSoilWeight", () => {
     const totalSoilWeight: number = calc.calcTotalSoilWeight();

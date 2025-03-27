@@ -1,40 +1,41 @@
-<form [formGroup]="form">
-  <div formArrayName="rows">
-    <div *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
-      <mat-form-field>
-        <mat-label>Soil Weight</mat-label>
-        <input
-          matInput
-          formControlName="soilWeight"
-          type="number"
-          [min]="0"
-          step='0.1'
-          [max]="100"
-          (input)="updateRow(i, 'soilWeight', $event)"
-          appPreventWheel
-        />
-      </mat-form-field>
+<div class="table-container">
+  <form [formGroup]="form">
+    <table>
+      <thead>
+        <tr>
+          <th>Diámetro tamiz (mm)</th>
+          <th>Peso de suelo (g)</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="rows">
+        <tr *ngFor="let row of rows().controls; let i = index" [formGroupName]="i">
+          <td>
+            <input
+              formControlName="tamizDiameter"
+              type="text"
+              (input)="updateRow(i, 'tamizDiameter', $event)"
+            />
+          </td>
+          <td>
+            <input
+              formControlName="soilWeight"
+              type="text"
+              (input)="updateRow(i, 'soilWeight', $event)"
+            />
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan='2'>
+            <button mat-raised-button color="primary" (click)="addRow()">+</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
 
-      <mat-form-field>
-        <mat-label>Tamiz Diameter</mat-label>
-        <input
-          matInput
-          formControlName="tamizDiameter"
-          type="number"
-          [min]="0"
-          step='0.1'
-          [max]="10"
-          (input)="updateRow(i, 'tamizDiameter', $event)"
-          appPreventWheel
-        />
-      </mat-form-field>
-
-      <div *ngIf="!row.valid" class="error-message">
-        Please enter valid values for both fields.
-      </div>
-    </div>
+  <div class="button-container">
+    <button mat-raised-button color="accent" (click)="onClickSubmit()">Calculate</button>
   </div>
-
-  <button mat-raised-button (click)="addRow()">Add Row</button>
-  <button mat-raised-button (click)="calculate()">Calculate</button>
-</form>
+</div>

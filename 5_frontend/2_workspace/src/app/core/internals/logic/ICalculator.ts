@@ -1,4 +1,4 @@
-import { MapSamples } from "../../../0shared";
+import { IResultsDto, MapSamples } from "../../../0shared";
 
 export interface ICalculator {
 
@@ -13,7 +13,7 @@ export interface ICalculator {
   calcMWDs(): Array<number>;
 
   calcMWDTotal(): number;
-  
-  hello(name: string): void;
+
+  getResults(): IResultsDto;
 
 }

@@ -1,20 +1,20 @@
 import { expect, test, beforeEach, describe } from '@jest/globals';
 
-import { CalculatorImpl, ICalculator } from "../src/core";
-import { MapSamples } from '../src/0shared';
+import { CalculatorImpl, ICalculator } from "../../../src/app/core";
+import { MapSamples } from '../../../src/app/0shared';
 
 
 
 describe("ICalculator", () => {
   const samplesRows1: MapSamples = new Map([
-    [ 0, { tamizDiameter: 10.0,  soilWeight: 0.    }  ],
-    [ 1, { tamizDiameter: 7.0,   soilWeight: 5.5   }  ],
-    [ 2, { tamizDiameter: 5.5,   soilWeight: 0.25  }  ],
-    [ 3, { tamizDiameter: 4.4,   soilWeight: 20.11 }  ],
-    [ 4, { tamizDiameter: 1.1,   soilWeight: 31.50 }  ],
-    [ 5, { tamizDiameter: 0.25,  soilWeight: 10.05 }  ],
-    [ 6, { tamizDiameter: 0.10,  soilWeight: 35.10 }  ],
-    [ 7, { tamizDiameter: 0.05,  soilWeight: 15.22 }  ],
+    [ 0, { tamizDiameter: 8.0,   soilWeight:   0.0    }  ],
+    [ 1, { tamizDiameter: 4.0,   soilWeight:   3.4    }  ],
+    [ 2, { tamizDiameter: 2.0, soilWeight:   21.26  }  ],
+    [ 3, { tamizDiameter: 1.0, soilWeight:   34.73  }  ],
+    [ 4, { tamizDiameter: 0.5, soilWeight:   35.69  }  ],
+    [ 5, { tamizDiameter: 0.25, soilWeight:  31.31  }  ],
+    [ 6, { tamizDiameter: 0.053, soilWeight: 38.26  }  ],
+    [ 7, { tamizDiameter: 0.0, soilWeight:   25.37  }  ],
   ]);
 
   let calc: ICalculator;
@@ -24,7 +24,7 @@ describe("ICalculator", () => {
   })
 
   test("calcTotalSoilWeight", () => {
-    const expectedWeight = 117.73;
+    const expectedWeight = 0.0 + 3.4 + 21.26 + 34.73 + 35.69 + 31.31 + 38.26 + 25.37;
     const expectedGot: number = calc.calcTotalSoilWeight();
     expect(expectedGot).toEqual(expectedWeight);
   });
@@ -33,13 +33,13 @@ describe("ICalculator", () => {
   test("calcTamizDiameterProm()", () => {
     // expected
     const soilWeightsExpected = [
-      8.5,
-      6.25,
-      4.95,
-      2.75,
-      0.675,
-      0.175,
-      0.075,
+      6.0000,
+      3.0000,
+      1.5000,
+      0.7500,
+      0.3750,
+      0.1515,
+      0.0265,
     ]
 
     // Test
@@ -49,10 +49,10 @@ describe("ICalculator", () => {
     //console.log("soilWeightsExpected", soilWeightsExpected);
 
     expect(tamizDiameterPromGot.length).toEqual(soilWeightsExpected.length);
-    
+
 
     for (let i = 0; i < tamizDiameterPromGot.length; i++) {
-      const got = Number(tamizDiameterPromGot[i].toFixed(3));
+      const got = tamizDiameterPromGot[i];
       const expected = soilWeightsExpected[i];
       expect(got).toEqual(expected);
     }
@@ -60,29 +60,25 @@ describe("ICalculator", () => {
   });
 
 
-
-
-
-
   test("calcSoilPortions()", () => {
     // Expected
     const soilPortionsExpected = [
       // 0.027777778, //Careful: the length is 1 less that the samples
-      0.046717064,
-      0.002123503,
-      0.170814576,
-      0.267561369,
-      0.085364818,
-      0.298139811,
-      0.129278858,
+      0.017892853,
+      0.111882960,
+      0.182770235,
+      0.187822334,
+      0.164772129,
+      0.201347227,
+      0.133512262
     ];
 
     // Test / Got
     const soilPortionsGot = calc.calcSoilPortions();
 
-    console.log("soilPortionsExpected", soilPortionsExpected);
-    console.log("soilPortionsGot", soilPortionsGot);
-    
+    //console.log("soilPortionsExpected", soilPortionsExpected);
+    //console.log("soilPortionsGot", soilPortionsGot);
+
     // Assert
     expect(soilPortionsGot.length).toEqual(soilPortionsExpected.length);
 
@@ -95,49 +91,49 @@ describe("ICalculator", () => {
   });
 
 
-  
+
   test("calcMWDs()", () => {
     // Expected
     const MWDsExpected = [
-      0.397095044,
-      0.013271894,
-      0.845532151,
-      0.735793765,
-      0.057621252,
-      0.052174467,
-      0.009695914,
+      0.107357118,
+      0.335648880,
+      0.274155353,
+      0.140866750,
+      0.061789548,
+      0.030504105,
+      0.003538075
     ]
-    
+
     // Test / Got
     const MWDsGot = calc.calcMWDs();
-    console.log("MWDsExpected", MWDsExpected);
-    console.log("MWDsGot", MWDsGot);
-    
-    
+    //console.log("MWDsExpected", MWDsExpected);
+    //console.log("MWDsGot", MWDsGot);
+
+
     // Assert
     expect(MWDsGot.length).toEqual(MWDsExpected.length);
-    
+
     for (let i = 0; i < MWDsGot.length; i++) {
       const got = MWDsGot[i].toFixed(7);
       const expected = MWDsExpected[i].toFixed(7); //OBSERVE: that we reduce the precision to avoid exaggerated comparison
 
       expect(got).toEqual(expected);
     }
-    
+
 
   });
-  
+
   test("calcMWDTotal()", () => {
     // Expected
-    const MWDTotalExpected = 2.11;
-    
+    const MWDTotalExpected = 0.95;
+
     // Test / Got
     const MWDTotal = calc.calcMWDTotal();
-    
+
     // Assert
     const FixedMWDTotal = Number(MWDTotal.toFixed(2));
     expect(FixedMWDTotal).toEqual(MWDTotalExpected);
-    
+
   });
 
 })

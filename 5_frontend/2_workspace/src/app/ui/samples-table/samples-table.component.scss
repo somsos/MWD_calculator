@@ -1,15 +1,41 @@
-.table-container {
+:host {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   align-items: center;
+}
 
-  table {
+.table-container {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+table {
+  width: 280px;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  text-align: center;
+  input {
     width: 100%;
-    max-width: 600px;
-
-    mat-form-field {
-      width: 100%;
-    }
   }
+}
+
+th {
+  text-wrap: wrap;
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+mat-form-field {
+  width: 100%;
+  margin: 0;
+}
+
+.button-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
 }

@@ -1,0 +1,15 @@
+#calc-container {
+  display: flex;
+  column-gap: 1rem;
+  margin: 1rem;
+  margin-bottom: 4rem;
+  justify-content: space-around;
+}
+
+
+@media (width <= 800px) {
+  #calc-container {
+    flex-direction: column;
+  }
+}
+

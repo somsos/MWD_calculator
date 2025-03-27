@@ -9,4 +9,11 @@
 </div>
 -->
 <hr />
-<app-samples-table />
+<div id='calc-container'>
+  <app-samples-table
+    (sampleSubmitted)='onSubmitSample($event)'
+  />
+  <mwd-calc
+    [results]='results'
+  />
+</div>
