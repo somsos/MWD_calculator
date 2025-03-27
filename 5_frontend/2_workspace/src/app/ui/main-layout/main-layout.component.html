@@ -1,19 +1,10 @@
-<h1>{{title}}</h1>
-<!--
-<div>
-  <p>
-    <button (click)='decrease()'>-</button>
-    __{{count()}}__
-    <button (click)='increase()'>+</button>
-  </p>
-</div>
--->
+<h3>Calculadora MWD</h3>
 <hr />
 <div id='calc-container'>
-  <app-samples-table
+  <app-mwd-samples
     (sampleSubmitted)='onSubmitSample($event)'
   />
-  <mwd-calc
+  <mwd-results
     [results]='results'
   />
 </div>

@@ -36,6 +36,8 @@ mat-form-field {
 
 .button-container {
   display: flex;
+  justify-content: center;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }

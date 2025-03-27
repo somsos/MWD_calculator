@@ -1,9 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { SamplesTableComponent } from '../samples-table/samples-table.component';
+import { MwdSamplesComponent } from '../mwd-samples/mwd-samples.component';
 import { IResultsDto, MapSamples } from '../../0shared';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { MwdCalcComponent } from '../mwd-calc/mwd-calc.component';
+import { MwdResultsComponent } from '../mwd-results/mwd-results.component';
 import { IInputDriver } from '../../core';
 import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriverImpl';
 
@@ -13,13 +13,12 @@ import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriv
     styleUrl: './main-layout.component.scss',
     standalone: true,
     imports: [
-      SamplesTableComponent,
-      MwdCalcComponent,
+      MwdSamplesComponent,
+      MwdResultsComponent,
       CommonModule
     ]
 })
 export class MainLayoutComponent {
-  title = 'mwd_calculator';
   results?: IResultsDto;
 
   onSubmitSample(newSample: MapSamples) {

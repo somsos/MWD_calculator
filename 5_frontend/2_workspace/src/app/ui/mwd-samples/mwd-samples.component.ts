@@ -1,38 +1,32 @@
-import { Component, computed, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
-import { PreventWheelDirective } from '../common/PreventWheelDirective';
 
 import { IRowSample, MapSamples } from "../../0shared";
 
 @Component({
-    selector: 'app-samples-table',
+    selector: 'app-mwd-samples',
     standalone: true,
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        PreventWheelDirective,
+      CommonModule,
+      ReactiveFormsModule,
+      MatTableModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
     ],
-    templateUrl: './samples-table.component.html',
-    styleUrls: ['./samples-table.component.scss']
+    templateUrl: './mwd-samples.component.html',
+    styleUrls: ['./mwd-samples.component.scss']
 })
-export class SamplesTableComponent implements OnInit {
+export class MwdSamplesComponent implements OnInit, AfterViewInit {
   private formBuilder = inject(FormBuilder);
 
   @Output()
   public readonly sampleSubmitted = new EventEmitter<MapSamples>();
-
-  private insertSample() {
-    this.rows().push
-  }
 
   // Define the form group that holds the form array
   form = this.formBuilder.group({
@@ -44,19 +38,29 @@ export class SamplesTableComponent implements OnInit {
   displayedColumns = ['tamizDiameter', 'soilWeight'];
 
   ngOnInit(): void {
-    const samplesRows1: MapSamples = new Map([
-      [0, {soilWeight: 1, tamizDiameter: 10}],
-      [1, {soilWeight: 2, tamizDiameter: 11}],
-      [2, {soilWeight: 3, tamizDiameter: 12}],
-      [3, {soilWeight: 4, tamizDiameter: 13}],
-      [4, {soilWeight: 5, tamizDiameter: 14}],
-      [5, {soilWeight: 6, tamizDiameter: 15}],
-      [6, {soilWeight: 7, tamizDiameter: 16}],
-      [7, {soilWeight: 8, tamizDiameter: 17}],
-    ]);
+    this._insertExample(true);
+  }
 
+  ngAfterViewInit(): void {
+    this.addRow();
+    this.addRow();
+  }
+
+  private _insertExample(insert: boolean) {
+    if(!insert) {
+      return ;
+    }
+    const samplesRows1: MapSamples = new Map([
+      [ 0, { tamizDiameter: 8.0,   soilWeight:   0.0    }  ],
+      [ 1, { tamizDiameter: 4.0,   soilWeight:   3.4    }  ],
+      [ 2, { tamizDiameter: 2.0, soilWeight:   21.26  }  ],
+      [ 3, { tamizDiameter: 1.0, soilWeight:   34.73  }  ],
+      [ 4, { tamizDiameter: 0.5, soilWeight:   35.69  }  ],
+      [ 5, { tamizDiameter: 0.25, soilWeight:  31.31  }  ],
+      [ 6, { tamizDiameter: 0.053, soilWeight: 38.26  }  ],
+      [ 7, { tamizDiameter: 0.0, soilWeight:   25.37  }  ],
+    ]);
     this._insertSample(samplesRows1);
-    this.addRow(); // Ensure at least one row on init
   }
 
   // Update row based on index and key
@@ -115,16 +119,16 @@ export class SamplesTableComponent implements OnInit {
 
   private _createRowFormGroup(): FormGroup {
     return this.formBuilder.group({
-      tamizDiameter: ['', [...SamplesTableComponent.numberValidators]],
-      soilWeight: ['', SamplesTableComponent.numberValidators],
+      tamizDiameter: ['', [...MwdSamplesComponent.numberValidators]],
+      soilWeight: ['', MwdSamplesComponent.numberValidators],
     });
   }
 
   private _insertSample(sample: MapSamples): void {
     sample.forEach(rd => {
       const newRow = this.formBuilder.group({
-        tamizDiameter: [rd.tamizDiameter, [...SamplesTableComponent.numberValidators]],
-        soilWeight: [rd.soilWeight, SamplesTableComponent.numberValidators],
+        tamizDiameter: [rd.tamizDiameter, [...MwdSamplesComponent.numberValidators]],
+        soilWeight: [rd.soilWeight, MwdSamplesComponent.numberValidators],
       });
       this.rows().push(newRow);
     })

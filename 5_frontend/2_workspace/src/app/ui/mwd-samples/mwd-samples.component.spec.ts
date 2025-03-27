@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MwdCalcComponent } from './mwd-calc.component';
+import { MwdSamplesComponent } from './mwd-samples.component';
 
-describe('MwdCalcComponent', () => {
-  let component: MwdCalcComponent;
-  let fixture: ComponentFixture<MwdCalcComponent>;
+describe('MwdSamplesComponent', () => {
+  let component: MwdSamplesComponent;
+  let fixture: ComponentFixture<MwdSamplesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MwdCalcComponent]
+      imports: [MwdSamplesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MwdCalcComponent);
+    fixture = TestBed.createComponent(MwdSamplesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

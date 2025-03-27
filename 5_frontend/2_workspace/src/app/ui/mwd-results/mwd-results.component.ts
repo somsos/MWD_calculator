@@ -9,7 +9,7 @@ import { IInputDriver } from '../../core';
 import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriverImpl';
 
 @Component({
-  selector: 'mwd-calc',
+  selector: 'mwd-results',
   standalone: true,
   imports: [
     CommonModule,
@@ -18,10 +18,10 @@ import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriv
     MatListModule,
     MatExpansionModule
   ],
-  templateUrl: './mwd-calc.component.html',
-  styleUrls: ['./mwd-calc.component.scss']
+  templateUrl: './mwd-results.component.html',
+  styleUrls: ['./mwd-results.component.scss']
 })
-export class MwdCalcComponent {
+export class MwdResultsComponent {
 
   @Input()
   public results?: IResultsDto;

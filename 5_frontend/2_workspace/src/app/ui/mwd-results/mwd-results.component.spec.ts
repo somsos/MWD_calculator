@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SamplesTableComponent } from './samples-table.component';
+import { MwdResultsComponent } from './mwd-results.component';
 
-describe('SamplesTableComponent', () => {
-  let component: SamplesTableComponent;
-  let fixture: ComponentFixture<SamplesTableComponent>;
+describe('MwdResultsComponent', () => {
+  let component: MwdResultsComponent;
+  let fixture: ComponentFixture<MwdResultsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SamplesTableComponent]
+      imports: [MwdResultsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SamplesTableComponent);
+    fixture = TestBed.createComponent(MwdResultsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
