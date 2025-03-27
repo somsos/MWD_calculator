@@ -1,0 +1,15 @@
+.table-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+
+  table {
+    width: 100%;
+    max-width: 600px;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

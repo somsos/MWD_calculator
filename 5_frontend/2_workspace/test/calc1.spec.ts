@@ -1,7 +1,7 @@
 import { expect, test, beforeEach, describe } from '@jest/globals';
 
-import { CalculatorImpl, ICalculator } from "../src/core";
-import { MapSamples } from '../src/0shared';
+import { CalculatorImpl, ICalculator } from "../src/app/core";
+import { MapSamples } from '../src/app/0shared';
 
 
 
@@ -39,10 +39,10 @@ describe("ICalculator", () => {
 
     //console.log("soilWeightsGot", soilWeightsGot);
     //console.log("soilWeightsExpected", soilWeightsExpected);
-    
+
 
     expect(soilWeightsGot.length).toEqual(soilWeightsExpected.length);
-    
+
 
     for (let i = 0; i < soilWeightsGot.length; i++) {
       const got = soilWeightsGot[i];
@@ -71,7 +71,7 @@ describe("ICalculator", () => {
 
     console.log("soilPortionsExpected", soilPortionsExpected);
     console.log("soilPortionsGot", soilPortionsGot);
-    
+
     // Assert
     expect(soilPortionsGot.length).toEqual(soilPortionsExpected.length);
 
@@ -84,7 +84,7 @@ describe("ICalculator", () => {
   });
 
 
-  
+
   test("calcMWDs()", () => {
     // Expected
     const MWDsExpected = [
@@ -96,38 +96,38 @@ describe("ICalculator", () => {
       3.013888882,
       3.666666663,
     ]
-    
+
     // Test / Got
     const MWDsGot = calc.calcMWDs();
     console.log("MWDsExpected", MWDsExpected);
     console.log("MWDsGot", MWDsGot);
-    
-    
+
+
     // Assert
     expect(MWDsGot.length).toEqual(MWDsExpected.length);
-    
+
     for (let i = 0; i < MWDsGot.length; i++) {
       const got = MWDsGot[i].toFixed(7);
       const expected = MWDsExpected[i].toFixed(7); //OBSERVE: that we reduce the precision to avoid exaggerated comparison
 
       expect(got).toEqual(expected);
     }
-    
+
 
   });
-  
+
   test("calcMWDTotal()", () => {
     // Expected
     const MWDTotalExpected = 13.902777774;
-    
+
     // Test / Got
     const MWDTotal = calc.calcMWDTotal();
-    
+
     // Assert
     const FixedMWDTotalExpected = Number(MWDTotalExpected.toFixed(7));
     const FixedMWDTotal = Number(MWDTotal.toFixed(7));
     expect(FixedMWDTotal).toEqual(FixedMWDTotalExpected);
-    
+
   });
 
 })

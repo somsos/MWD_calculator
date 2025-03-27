@@ -1,1 +1,0 @@
-export type { MapSamples } from "./internals/types/IRowSample";
