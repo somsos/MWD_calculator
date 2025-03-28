@@ -22,7 +22,7 @@ import { IRowSample, MapSamples } from "../../0shared";
     templateUrl: './mwd-samples.component.html',
     styleUrls: ['./mwd-samples.component.scss']
 })
-export class MwdSamplesComponent implements OnInit, AfterViewInit {
+export class MwdSamplesComponent implements AfterViewInit {
   private formBuilder = inject(FormBuilder);
 
   @Output()
@@ -37,9 +37,6 @@ export class MwdSamplesComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['tamizDiameter', 'soilWeight'];
 
-  ngOnInit(): void {
-    this._insertExample(true);
-  }
 
   ngAfterViewInit(): void {
     this.addRow();
@@ -94,6 +91,10 @@ export class MwdSamplesComponent implements OnInit, AfterViewInit {
     this.rows().push(this._createRowFormGroup());
   }
 
+  private _removeRows() {
+    this.rows().clear();
+  }
+
   onClickSubmit(): void {
     const sampleOnForm = this._castUIToSample();
     this.sampleSubmitted.emit(sampleOnForm);
@@ -132,7 +133,10 @@ export class MwdSamplesComponent implements OnInit, AfterViewInit {
       });
       this.rows().push(newRow);
     })
+  }
 
-
+  onClickAddExample(): void {
+    this._removeRows();
+    this._insertExample(true);
   }
 }
