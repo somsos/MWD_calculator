@@ -2,9 +2,14 @@
 <hr />
 <div id='calc-container'>
   <app-mwd-samples
+    #inputSample
     (sampleSubmitted)='onSubmitSample($event)'
   />
-  <mwd-results
-    [results]='results'
-  />
+  @defer {
+    <mwd-results
+      [results]='results'
+      (downloadClick)='downloadCsv()'
+    />
+  }
+
 </div>

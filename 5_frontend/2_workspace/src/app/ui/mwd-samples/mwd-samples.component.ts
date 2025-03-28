@@ -139,4 +139,11 @@ export class MwdSamplesComponent implements AfterViewInit {
     this._removeRows();
     this._insertExample(true);
   }
+
+  onClickReset(): void {
+    this._removeRows();
+    this.addRow();
+    this.addRow();
+  }
+
 }

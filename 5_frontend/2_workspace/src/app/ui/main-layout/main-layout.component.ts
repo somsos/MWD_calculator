@@ -1,10 +1,9 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MwdSamplesComponent } from '../mwd-samples/mwd-samples.component';
 import { IResultsDto, MapSamples } from '../../0shared';
-import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MwdResultsComponent } from '../mwd-results/mwd-results.component';
-import { IInputDriver } from '../../core';
+import { CalcMwdModule, CoreNames, IInputDriver, IOutputDriver } from '../../core';
 import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriverImpl';
 
 @Component({
@@ -13,6 +12,7 @@ import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriv
     styleUrl: './main-layout.component.scss',
     standalone: true,
     imports: [
+      CalcMwdModule,
       MwdSamplesComponent,
       MwdResultsComponent,
       CommonModule
@@ -20,10 +20,23 @@ import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriv
 })
 export class MainLayoutComponent {
   results?: IResultsDto;
+  samples?: MapSamples;
+
+  constructor(
+    @Inject(CoreNames.IOutputDriver) private _ourDrv: IOutputDriver,
+  ) {}
 
   onSubmitSample(newSample: MapSamples) {
     const inputDriver:IInputDriver = new InputDriverImpl();
-    this.results = inputDriver.resolveSamples(newSample);
+    this.samples = newSample;
+    this.results = inputDriver.resolveSamples(this.samples);
+  }
+
+  downloadCsv(): void {
+    if(!this.results || !this.samples) {
+      throw new Error("Aun no se puede generar csv");
+    }
+    this._ourDrv.resultsToCsv(this.results, this.samples);
   }
 
 }
