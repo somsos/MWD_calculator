@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { MapSamples, IResultsDto, IRowSample } from "../../../../0shared";
 import { CalculatorImpl } from "../../logic/CalculatorImpl";
-import { IInputDriver } from "../IInputDriver";
+import { IInputDriver } from "../../../../0shared/internals/drivers/IInputDriver";
 
 @Injectable()
 export class InputDriverImpl implements IInputDriver {

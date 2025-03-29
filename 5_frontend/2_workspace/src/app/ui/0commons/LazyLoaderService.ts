@@ -1,27 +1,26 @@
-import { Injectable } from '@angular/core'
-import { Observable, of, delay, tap } from 'rxjs'
+import { Injectable, signal } from '@angular/core'
+import { IInputDriver, IOutputDriver } from '../../0shared';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LazyLoaderService {
-  private lazyMap: Map<string, Promise<unknown>> = new Map()
+  public coreLoaded = signal(false);
 
-  constructor() {}
+  private static CalcMwdModule: any;
 
-  async getLazyModule(key: string): Promise<unknown> {
-    return this.lazyMap.get(key)
+  async startCoreModuleLoading(): Promise<void> {
+    LazyLoaderService.CalcMwdModule = await import('../../core/CalcMwdModule').then((m) => m.CalcMwdModule)
   }
 
-  loadLazyModules(): Observable<number | void> {
-    return of(1).pipe(
-      delay(2000),
-      tap(() => {
-        this.lazyMap.set(
-          'lazy',
-          import('../../core/internals/CalcMwdModule').then((m) => m.CalcMwdModule)
-        )
-      })
-    )
+  public getCoreOutputDriver(): IOutputDriver {
+    const a = new LazyLoaderService.CalcMwdModule();
+    return a.getOutputDriver();
   }
+
+  getCoreInputDriver(): IInputDriver {
+    const a = new LazyLoaderService.CalcMwdModule();
+    return a.getInputDriver();
+  }
+
 }

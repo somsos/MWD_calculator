@@ -1,6 +1,11 @@
 <header class='main-header'>
   <h3>Calculadora MWD</h3>
-  <button mat-button (click)="openDialog()">Ayuda</button>
+  <button mat-button
+    (click)="openDialog()"
+    [disabled]="!loader.coreLoaded()"
+  >
+    Ayuda
+  </button>
 </header>
 
 <hr />
@@ -8,14 +13,16 @@
 <div id='calc-container'>
 
   <app-mwd-samples
+    [coreLoaded]="loader.coreLoaded"
     (sampleSubmitted)='onSubmitSample($event)'
+    (resetClick)='onResetClick()'
   />
 
-  @defer {
-    <mwd-results
-      [results]='results'
-      (downloadClick)='downloadCsv()'
-    />
-  }
+@defer {
+  <mwd-results
+    [results]='results'
+    (downloadClick)='downloadCsv()'
+  />
+}
 
 </div>

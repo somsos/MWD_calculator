@@ -1,7 +1,7 @@
 import { expect, test, beforeEach, describe } from '@jest/globals';
-
-import { CalculatorImpl, ICalculator } from "../../../src/app/core";
 import { MapSamples } from '../../../src/app/0shared';
+import { ICalculator } from '../../../src/app/core/internals/logic/ICalculator';
+import { CalculatorImpl } from '../../../src/app/core/internals/logic/CalculatorImpl';
 
 
 

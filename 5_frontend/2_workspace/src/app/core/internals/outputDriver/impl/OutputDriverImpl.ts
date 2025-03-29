@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { IOutputDriver } from "../IOutputDriver";
+import { IOutputDriver } from "../../../../0shared/internals/drivers/IOutputDriver";
 import { IResultsDto, MapSamples } from "../../../../0shared";
 
 

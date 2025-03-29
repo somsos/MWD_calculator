@@ -1,5 +1,4 @@
-import { IResultsDto, MapSamples, ResultsDtoUtils } from "../../../src/app/0shared";
-import { IInputDriver } from "../../../src/app/core";
+import { IInputDriver, IResultsDto, MapSamples, ResultsDtoUtils } from "../../../src/app/0shared";
 import { InputDriverImpl } from "../../../src/app/core/internals/inputDriver/impl/InputDriverImpl";
 
 interface Case {

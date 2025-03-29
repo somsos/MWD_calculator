@@ -1,14 +1,8 @@
-import { AfterViewInit, Component, computed, EventEmitter, Inject, inject, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { AfterViewInit, Component, computed, EventEmitter, inject, Input, Output, WritableSignal } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { IRowSample, MapSamples } from "../../0shared";
-import { CoreNames, IInputDriver } from '../../core';
 import { MaterialModule } from '../material.module';
+import { LazyLoaderService } from '../0commons/LazyLoaderService';
 
 @Component({
     selector: 'app-mwd-samples',
@@ -20,10 +14,17 @@ import { MaterialModule } from '../material.module';
     styleUrls: ['./mwd-samples.component.scss']
 })
 export class MwdSamplesComponent implements AfterViewInit {
-  private formBuilder = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly _loader = inject(LazyLoaderService);
+
+  @Input()
+  coreLoaded!: WritableSignal<boolean>;
 
   @Output()
   public readonly sampleSubmitted = new EventEmitter<MapSamples>();
+
+  @Output()
+  public readonly resetClick = new EventEmitter<void>();
 
   // Define the form group that holds the form array
   form = this.formBuilder.group({
@@ -33,10 +34,6 @@ export class MwdSamplesComponent implements AfterViewInit {
   public rows = computed(() => this.form.get('rows') as FormArray);
 
   displayedColumns = ['tamizDiameter', 'soilWeight'];
-
-  constructor(
-    @Inject(CoreNames.IInputDriver) private _inDrv: IInputDriver,
-  ) { }
 
   ngAfterViewInit(): void {
     this.addRow();
@@ -89,6 +86,10 @@ export class MwdSamplesComponent implements AfterViewInit {
   // Add a new row if the penultimate row is valid
   addRow(): void {
     this.rows().push(this._createRowFormGroup());
+  }
+
+  removeRow() {
+    this.rows().removeAt(this.rows().length-1);
   }
 
   private _removeRows() {
@@ -144,11 +145,13 @@ export class MwdSamplesComponent implements AfterViewInit {
     this._removeRows();
     this.addRow();
     this.addRow();
+    this.resetClick.emit();
   }
 
   async onSelectFile(ev: any) {
     const csvFile = ev.target.files[0];
-    const sampleInCsv = await this._inDrv.parseFileToSamples(csvFile);
+    const inDrv = this._loader.getCoreInputDriver();
+    const sampleInCsv = await inDrv.parseFileToSamples(csvFile);
     this._insertSample(sampleInCsv);
   }
 

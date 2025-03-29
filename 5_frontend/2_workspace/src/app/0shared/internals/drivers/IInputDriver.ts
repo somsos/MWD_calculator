@@ -1,4 +1,4 @@
-import { IResultsDto, MapSamples } from "../../../0shared";
+import { IResultsDto, MapSamples } from "../..";
 
 export interface IInputDriver {
 
