@@ -27,7 +27,8 @@ export class InputDriverImpl implements IInputDriver {
 
   async parseFileToSamples(file: File): Promise<MapSamples> {
     const prop = new Promise<MapSamples>(( async (res, rej) => {
-      const Papa = await import("papaparse")
+      const PapaLib = await import("ngx-papaparse")
+      const Papa  = new PapaLib.Papa();
       Papa.parse(file, {
         complete: (results, file) => {
           const resp: MapSamples = this._parseDataFileToSample(results.data);

@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-demo": "ng build -c production --deploy-url /calc_mwd/",
+    "build-demo": "ng build -c production --deploy-url /calc_mwd/ --output-path ../3_results/dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -21,7 +21,7 @@
     "@angular/platform-browser": "^19.2.3",
     "@angular/platform-browser-dynamic": "^19.2.3",
     "export-to-csv": "^1.4.0",
-    "papaparse": "^5.5.2",
+    "ngx-papaparse": "^8.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

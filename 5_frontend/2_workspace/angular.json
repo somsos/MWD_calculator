@@ -33,6 +33,9 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
+            "allowedCommonJsDependencies": [
+              "papaparse"
+            ],
             "scripts": []
           },
           "configurations": {
