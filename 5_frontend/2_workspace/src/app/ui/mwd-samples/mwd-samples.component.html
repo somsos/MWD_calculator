@@ -36,6 +36,9 @@
   </form>
 
   <div class="button-container">
+    <input hidden (change)="onSelectFile($event)" #fileInput type="file" accept=".csv">
+    <button type="button" mat-raised-button (click)="fileInput.click()">Insetar csv</button>
+
     <button mat-raised-button color="accent" (click)="onClickSubmit()">Calcular</button>
     <button mat-raised-button color="accent" (click)="onClickReset()">Reset</button>
     <button mat-raised-button color="accent" (click)="onClickAddExample()">Ejemplo</button>

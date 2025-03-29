@@ -19,8 +19,8 @@
 # ToDo
 
 - [X] Add button of clean
-- [X] Add button of add csv
-- [ ] Add button of download csv
+- [X] Add button of download csv
+- [>>] Add button of add csv
 - [ ] Add button of add excel
 - [ ] Add button of download excel
 - [ ] 

@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { OutputDriverImpl } from './outputDriver/impl/OutputDriverImpl';
+import { InputDriverImpl } from './inputDriver/impl/InputDriverImpl';
 
 /*
 I Don't know why but it gives undefined if i put it in index.ts
 */
-export abstract class CoreNames {
-  public static readonly IOutputDriver = "IOutputDriver"
+export enum CoreNames {
+  IOutputDriver = "IOutputDriver",
+  IInputDriver = "IOutputDriver",
 }
 
 @NgModule({
@@ -14,10 +16,8 @@ export abstract class CoreNames {
   ],
   exports: [],
   providers: [
-    {
-      provide: CoreNames.IOutputDriver,
-      useClass: OutputDriverImpl
-    },
+    { provide: CoreNames.IOutputDriver, useClass: OutputDriverImpl },
+    { provide: CoreNames.IInputDriver, useClass: InputDriverImpl },
   ],
 })
 export class CalcMwdModule { }

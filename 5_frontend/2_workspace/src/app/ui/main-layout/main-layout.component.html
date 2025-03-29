@@ -1,10 +1,16 @@
-<h3>Calculadora MWD</h3>
+<header class='main-header'>
+  <h3>Calculadora MWD</h3>
+  <button mat-button (click)="openDialog()">Ayuda</button>
+</header>
+
 <hr />
+
 <div id='calc-container'>
+
   <app-mwd-samples
-    #inputSample
     (sampleSubmitted)='onSubmitSample($event)'
   />
+
   @defer {
     <mwd-results
       [results]='results'

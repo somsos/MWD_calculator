@@ -1,23 +1,20 @@
-import { AfterViewInit, Component, computed, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, computed, EventEmitter, Inject, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { IRowSample, MapSamples } from "../../0shared";
+import { CoreNames, IInputDriver } from '../../core';
+import { MaterialModule } from '../material.module';
 
 @Component({
     selector: 'app-mwd-samples',
     standalone: true,
     imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      MatTableModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatButtonModule,
+      MaterialModule
     ],
     templateUrl: './mwd-samples.component.html',
     styleUrls: ['./mwd-samples.component.scss']
@@ -37,6 +34,9 @@ export class MwdSamplesComponent implements AfterViewInit {
 
   displayedColumns = ['tamizDiameter', 'soilWeight'];
 
+  constructor(
+    @Inject(CoreNames.IInputDriver) private _inDrv: IInputDriver,
+  ) { }
 
   ngAfterViewInit(): void {
     this.addRow();
@@ -126,6 +126,7 @@ export class MwdSamplesComponent implements AfterViewInit {
   }
 
   private _insertSample(sample: MapSamples): void {
+    this._removeRows();
     sample.forEach(rd => {
       const newRow = this.formBuilder.group({
         tamizDiameter: [rd.tamizDiameter, [...MwdSamplesComponent.numberValidators]],
@@ -136,7 +137,6 @@ export class MwdSamplesComponent implements AfterViewInit {
   }
 
   onClickAddExample(): void {
-    this._removeRows();
     this._insertExample(true);
   }
 
@@ -144,6 +144,12 @@ export class MwdSamplesComponent implements AfterViewInit {
     this._removeRows();
     this.addRow();
     this.addRow();
+  }
+
+  async onSelectFile(ev: any) {
+    const csvFile = ev.target.files[0];
+    const sampleInCsv = await this._inDrv.parseFileToSamples(csvFile);
+    this._insertSample(sampleInCsv);
   }
 
 }

@@ -6,6 +6,17 @@
   justify-content: space-around;
 }
 
+.main-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h3 {
+    margin-left: 5px;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+  }
+}
+
 
 @media (width <= 800px) {
   #calc-container {

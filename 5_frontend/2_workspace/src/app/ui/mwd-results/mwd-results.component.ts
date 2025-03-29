@@ -7,17 +7,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { IResultsDto, MapSamples } from '../../0shared';
 import { CoreNames, IOutputDriver } from '../../core';
 import { MatButtonModule } from '@angular/material/button';
+import { MaterialModule } from '../material.module';
 
 @Component({
   selector: 'mwd-results',
   standalone: true,
   imports: [
-    CommonModule,
-    MatCardModule,
-    MatDividerModule,
-    MatListModule,
-    MatButtonModule,
-    MatExpansionModule
+    MaterialModule,
   ],
   templateUrl: './mwd-results.component.html',
   styleUrls: ['./mwd-results.component.scss']
