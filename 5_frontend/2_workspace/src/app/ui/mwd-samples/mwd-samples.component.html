@@ -1,4 +1,10 @@
-<div class="table-container">
+<mwd-history
+  *ngIf="showHistory$()"
+  (recordClick)='insertSample($event)'
+  (backFromHistory)='showHistory$.set(false)'
+/>
+
+<div class="table-container" *ngIf="showHistory$() === false">
   <form [formGroup]="form">
     <table>
       <thead>
@@ -37,21 +43,21 @@
   </form>
 
   <div class="button-container">
+
+    <button mat-raised-button
+      (click)="showHistory$.set(true)"
+      >Historial</button>
+
     <input hidden (change)="onSelectFile($event)" #fileInput type="file" accept=".csv">
+
+    <button mat-raised-button
+      color="accent"
+      (click)="onClickReset()">Limpiar</button>
 
     <button mat-raised-button
       [disabled]="!coreLoaded()"
       (click)="fileInput.click()"
       >Insertar csv</button>
-
-    <button mat-raised-button
-      color="accent"
-      (click)="onClickReset()">Reset</button>
-
-    <button mat-raised-button
-      color="accent"
-      [disabled]="!coreLoaded()"
-      (click)="onClickAddExample()">Ejemplo</button>
 
     <button mat-flat-button
       color="primary"

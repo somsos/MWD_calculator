@@ -1,14 +1,16 @@
-import { AfterViewInit, Component, computed, EventEmitter, inject, Input, Output, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, computed, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { IRowSample, MapSamples } from "../../0shared";
 import { MaterialModule } from '../material.module';
 import { LazyLoaderService } from '../0commons/LazyLoaderService';
+import { MwdHistoryComponent } from '../mwd-history/mwd-history.component';
 
 @Component({
     selector: 'app-mwd-samples',
     standalone: true,
     imports: [
-      MaterialModule
+      MaterialModule,
+      MwdHistoryComponent,
     ],
     templateUrl: './mwd-samples.component.html',
     styleUrls: ['./mwd-samples.component.scss']
@@ -33,28 +35,13 @@ export class MwdSamplesComponent implements AfterViewInit {
 
   public rows = computed(() => this.form.get('rows') as FormArray);
 
-  displayedColumns = ['tamizDiameter', 'soilWeight'];
+  readonly displayedColumns = ['tamizDiameter', 'soilWeight'];
+
+  public readonly showHistory$ = signal(false);
 
   ngAfterViewInit(): void {
     this.addRow();
     this.addRow();
-  }
-
-  private _insertExample(insert: boolean) {
-    if(!insert) {
-      return ;
-    }
-    const samplesRows1: MapSamples = new Map([
-      [ 0, { tamizDiameter: 8.0,   soilWeight:   0.0    }  ],
-      [ 1, { tamizDiameter: 4.0,   soilWeight:   3.4    }  ],
-      [ 2, { tamizDiameter: 2.0, soilWeight:   21.26  }  ],
-      [ 3, { tamizDiameter: 1.0, soilWeight:   34.73  }  ],
-      [ 4, { tamizDiameter: 0.5, soilWeight:   35.69  }  ],
-      [ 5, { tamizDiameter: 0.25, soilWeight:  31.31  }  ],
-      [ 6, { tamizDiameter: 0.053, soilWeight: 38.26  }  ],
-      [ 7, { tamizDiameter: 0.0, soilWeight:   25.37  }  ],
-    ]);
-    this._insertSample(samplesRows1);
   }
 
   // Update row based on index and key
@@ -67,6 +54,10 @@ export class MwdSamplesComponent implements AfterViewInit {
     }
 
     const valueNum = Number(valueStr);
+    if(valueNum === 0) {
+      //When we have values as 0.0 or 0.00, we will get 0 but that will set the input as 0 making it annoying for the user.
+      return ;
+    }
 
     if (isNaN(valueNum)) {
       setTimeout(() => (inputElement.value = ''), 100);
@@ -78,7 +69,8 @@ export class MwdSamplesComponent implements AfterViewInit {
 
     // Check if the penultimate row is valid before adding a new row
     const penultimateRowValid = this.rows().length > 1 && this.rows().at(this.rows().length - 2).valid;
-    if (penultimateRowValid) {
+    const userIsEditingLastRow = index === this.rows().length - 1;
+    if (penultimateRowValid && userIsEditingLastRow) {
       this.addRow();
     }
   }
@@ -126,8 +118,8 @@ export class MwdSamplesComponent implements AfterViewInit {
     });
   }
 
-  private _insertSample(sample: MapSamples): void {
-    this._removeRows();
+  public insertSample(sample: MapSamples): void {
+    this.onClickReset(false);
     sample.forEach(rd => {
       const newRow = this.formBuilder.group({
         tamizDiameter: [rd.tamizDiameter, [...MwdSamplesComponent.numberValidators]],
@@ -135,16 +127,15 @@ export class MwdSamplesComponent implements AfterViewInit {
       });
       this.rows().push(newRow);
     })
+    this.onClickSubmit();
   }
 
-  onClickAddExample(): void {
-    this._insertExample(true);
-  }
-
-  onClickReset(): void {
+  onClickReset(addRows = true): void {
     this._removeRows();
-    this.addRow();
-    this.addRow();
+    if(addRows) {
+      this.addRow();
+      this.addRow();
+    }
     this.resetClick.emit();
   }
 
@@ -152,7 +143,7 @@ export class MwdSamplesComponent implements AfterViewInit {
     const csvFile = ev.target.files[0];
     const inDrv = this._loader.getCoreInputDriver();
     const sampleInCsv = await inDrv.parseFileToSamples(csvFile);
-    this._insertSample(sampleInCsv);
+    this.insertSample(sampleInCsv);
   }
 
 }

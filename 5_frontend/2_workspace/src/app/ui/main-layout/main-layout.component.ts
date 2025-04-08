@@ -2,11 +2,11 @@ import { AfterContentInit, Component, inject, signal, WritableSignal } from '@an
 import { MwdSamplesComponent } from '../mwd-samples/mwd-samples.component';
 import { IInputDriver, IOutputDriver, IResultsDto, MapSamples } from '../../0shared';
 import { MwdResultsComponent } from '../mwd-results/mwd-results.component';
-//import { CalcMwdModule, CoreNames, IInputDriver, IOutputDriver } from '../../core';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from '../material.module';
 import { ComponentType } from '@angular/cdk/overlay';
 import { LazyLoaderService } from '../0commons/LazyLoaderService';
+import { IMapSamplesHistoryService, MapSamplesHistoryServiceImpl } from '../0commons/MapSamplesHistoryServiceImpl';
 
 @Component({
     selector: 'main-layout-root',
@@ -15,10 +15,12 @@ import { LazyLoaderService } from '../0commons/LazyLoaderService';
     standalone: true,
     imports: [
       MaterialModule,
-      //CalcMwdModule,
       MwdSamplesComponent,
       MwdResultsComponent,
-    ]
+    ],
+    providers: [
+      MapSamplesHistoryServiceImpl
+    ],
 })
 export class MainLayoutComponent implements AfterContentInit {
   results: WritableSignal<IResultsDto | null> = signal(null);
@@ -27,6 +29,7 @@ export class MainLayoutComponent implements AfterContentInit {
   public readonly loader = inject(LazyLoaderService);
   private _ourDrv!: IOutputDriver;
   private _inDrv!: IInputDriver;
+  private readonly _historySrv: IMapSamplesHistoryService = inject(MapSamplesHistoryServiceImpl);
 
 
   ngAfterContentInit(): void {
@@ -40,7 +43,13 @@ export class MainLayoutComponent implements AfterContentInit {
   onSubmitSample(newSample: MapSamples) {
     this.samples = newSample;
     const results = this._inDrv.resolveSamples(newSample);
+    this._addToHistory(newSample, results);
     this.results.set(results);
+  }
+
+  _addToHistory(newSample: MapSamples, results: IResultsDto) {
+    const newRecord = { sample: newSample, result: results.MWDTotal };
+    this._historySrv.addSamplesRecord(newRecord);
   }
 
   downloadCsv(): void {
