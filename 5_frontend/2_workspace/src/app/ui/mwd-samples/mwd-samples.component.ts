@@ -49,7 +49,12 @@ export class MwdSamplesComponent implements AfterViewInit {
     const inputElement = event.target as HTMLInputElement;
     const valueStr = inputElement.value;
 
-    if(valueStr.endsWith(".")) {
+    if(valueStr.endsWith(".") || valueStr.endsWith("0")) {
+      return ;
+    }
+
+    if(valueStr.endsWith(",")) {
+      valueStr.replace(",", ".");
       return ;
     }
 

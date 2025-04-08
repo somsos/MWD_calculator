@@ -21,7 +21,11 @@
 - [X] Add button of clean
 - [X] Add button of download csv
 - [X] Add button of add csv
-- [>>] Add history
+- [X] Add history
+- [X] Check type of keyboard it shows in android
+- [X] Check inputs like 0.105 can get in without problems (when gets 0.10 transform it to 0.1)
+- [ ] Transform comma in point
+- [ ] Create installable as PWA
 - [ ] Add button of add excel
 - [ ] Add button of download excel
 

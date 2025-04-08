@@ -13,14 +13,14 @@
   <div class="history-list" *ngIf="history.length > 0">
 
     <div class="history-row history-itemHeader">
-      <div>Agregado</div>
+      <div style='min-width: 140px;'>Agregado</div>
       <div>Nombre</div>
       <div>Resultado</div>
     </div>
 
     <div *ngFor='let item of history; index as i' class='history-row-container'>
       <div class="history-row history-item" (click)="onRecordClick(i)">
-        <div>{{ item.createdAt | date: 'short' }}</div>
+        <div style='min-width: 140px;'>{{ item.createdAt | date: 'short' }}</div>
         <div>
           {{ (i === 0) ? "Ejemplo" : i }}
           <svg style='margin-left: 5px;' *ngIf="i !== 0" (click)="onClickCleanOne(i); $event.stopPropagation()"
