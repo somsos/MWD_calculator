@@ -7,3 +7,7 @@
 ### Introduction
 
 Calculator for the paper "estabilidad de los agregados del suelo tamizando en húmedo"
+
+## ToDoç
+
+- [ ] Incluir el IResultsDto

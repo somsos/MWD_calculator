@@ -1,13 +1,9 @@
 # ToDo
 
 - [X] Decide which technologies to use
-- [>>] Create backlog (user histories)
-- [ ] Use git and create upload a backup
-- [ ] Create a deploy script
-- [ ] Design workflow
-  - [ ] How to resolve questions
-  - [ ] How to communicate progress
-  - [ ] How to setup users tests
+- [X] Create backlog (user histories)
+- [X] Use git and create upload a backup
+- [X] Create a flow
 - [ ] Design Core (ER Diagram)
 - [ ] Design UX (List of features and ranged by importance)
 - [ ] Design UI (Wireframe)
