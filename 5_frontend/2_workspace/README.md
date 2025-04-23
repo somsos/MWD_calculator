@@ -16,7 +16,7 @@
 
 4, Go to netlify > look for my_demos repository > press deploy button
 
-# ToDo
+## ToDo
 
 - [X] Add button of clean
 - [X] Add button of download csv
@@ -24,7 +24,9 @@
 - [X] Add history
 - [X] Check type of keyboard it shows in android
 - [X] Check inputs like 0.105 can get in without problems (when gets 0.10 transform it to 0.1)
+- [ ] Make transparent the icon, for future change of background color
 - [ ] Transform comma in point
+- [ ] Create build to change the manifest (in index.html) and worker (main.XXX.js) to the child path
 - [ ] Create installable as PWA
 - [ ] Add button of add excel
 - [ ] Add button of download excel

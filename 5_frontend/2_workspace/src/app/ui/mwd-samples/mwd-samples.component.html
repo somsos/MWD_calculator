@@ -57,14 +57,12 @@
       (click)="onClickReset()">Limpiar</button>
 
     <button mat-raised-button
-      [disabled]="!coreLoaded()"
       (click)="fileInput.click()"
       >Insertar csv</button>
 
     <button mat-flat-button
       color="primary"
       (click)="onClickSubmit()"
-      [disabled]="!coreLoaded()"
     >Calcular</button>
 
   </div>

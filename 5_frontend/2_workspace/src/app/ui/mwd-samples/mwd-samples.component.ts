@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, computed, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, computed, EventEmitter, inject, Output, signal, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { IRowSample, MapSamples } from "../../0shared";
 import { MaterialModule } from '../material.module';
-import { LazyLoaderService } from '../0commons/LazyLoaderService';
 import { MwdHistoryComponent } from '../mwd-history/mwd-history.component';
+import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriverImpl';
 
 @Component({
     selector: 'app-mwd-samples',
@@ -17,16 +17,14 @@ import { MwdHistoryComponent } from '../mwd-history/mwd-history.component';
 })
 export class MwdSamplesComponent implements AfterViewInit {
   private readonly formBuilder = inject(FormBuilder);
-  private readonly _loader = inject(LazyLoaderService);
-
-  @Input()
-  coreLoaded!: WritableSignal<boolean>;
 
   @Output()
   public readonly sampleSubmitted = new EventEmitter<MapSamples>();
 
   @Output()
   public readonly resetClick = new EventEmitter<void>();
+
+  private readonly _inDrv = inject(InputDriverImpl);
 
   // Define the form group that holds the form array
   form = this.formBuilder.group({
@@ -48,13 +46,14 @@ export class MwdSamplesComponent implements AfterViewInit {
   updateRow(index: number, key: keyof IRowSample, event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const valueStr = inputElement.value;
+    const row = this.rows().at(index);
 
     if(valueStr.endsWith(".") || valueStr.endsWith("0")) {
       return ;
     }
 
     if(valueStr.endsWith(",")) {
-      valueStr.replace(",", ".");
+      row.patchValue({ [key]: valueStr.replaceAll(",", ".") });
       return ;
     }
 
@@ -69,7 +68,7 @@ export class MwdSamplesComponent implements AfterViewInit {
       return;
     }
 
-    const row = this.rows().at(index);
+
     row.patchValue({ [key]: valueNum });
 
     // Check if the penultimate row is valid before adding a new row
@@ -146,8 +145,7 @@ export class MwdSamplesComponent implements AfterViewInit {
 
   async onSelectFile(ev: any) {
     const csvFile = ev.target.files[0];
-    const inDrv = this._loader.getCoreInputDriver();
-    const sampleInCsv = await inDrv.parseFileToSamples(csvFile);
+    const sampleInCsv = await this._inDrv.parseFileToSamples(csvFile);
     this.insertSample(sampleInCsv);
   }
 

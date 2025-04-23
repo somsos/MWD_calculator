@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { MaterialModule } from '../material.module';
-import { ISampleRecord, MapSamplesHistoryServiceImpl } from '../0commons/MapSamplesHistoryServiceImpl';
+import { MapSamplesHistoryServiceImpl } from '../0commons/MapSamplesHistoryServiceImpl';
 import { map } from 'rxjs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MapSamples } from "../../0shared";
