@@ -21,6 +21,7 @@
               type="text"
               inputmode="numeric"
               (input)="updateRow(i, 'tamizDiameter', $event)"
+              (focusout)="checksOnUnfocus(i, 'tamizDiameter', $event)"
             />
           </td>
           <td>
@@ -29,6 +30,7 @@
               type="text"
               inputmode="numeric"
               (input)="updateRow(i, 'soilWeight', $event)"
+              (focusout)="checksOnUnfocus(i, 'soilWeight', $event)"
             />
           </td>
         </tr>
@@ -36,7 +38,7 @@
       <tfoot>
         <tr>
           <td colspan='2'>
-            <button mat-raised-button (click)="removeRow()">-</button>
+            <button mat-raised-button (click)="removeLastRow()">-</button>
             <button mat-raised-button (click)="addRow()">+</button>
           </td>
         </tr>

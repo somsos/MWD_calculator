@@ -24,7 +24,9 @@
 - [X] Add history
 - [X] Check type of keyboard it shows in android
 - [X] Check inputs like 0.105 can get in without problems (when gets 0.10 transform it to 0.1)
-- [ ] Make transparent the icon, for future change of background color
+- [ ] Check input by keyboard in Firefox, and ensure that they get in like numbers and not like text
+- [ ] Set autofocus at first input
+- [ ] Make the icon image with background transparency, for future change of background color in the page
 - [ ] Transform comma in point
 - [ ] Create build to change the manifest (in index.html) and worker (main.XXX.js) to the child path
 - [ ] Create installable as PWA

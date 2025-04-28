@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, computed, EventEmitter, inject, Output, signal, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { IRowSample, MapSamples } from "../../0shared";
 import { MaterialModule } from '../material.module';
 import { MwdHistoryComponent } from '../mwd-history/mwd-history.component';
 import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriverImpl';
+import { NumberUtils } from '../../0shared/internals/utils/NumberUtils';
 
 @Component({
     selector: 'app-mwd-samples',
@@ -45,33 +46,37 @@ export class MwdSamplesComponent implements AfterViewInit {
   // Update row based on index and key
   updateRow(index: number, key: keyof IRowSample, event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    const valueStr = inputElement.value;
     const row = this.rows().at(index);
+    let valueStr: string = inputElement.value;
 
-    if(valueStr.endsWith(".") || valueStr.endsWith("0")) {
+    if(NumberUtils.userIsStillIntroducing(valueStr)) {
+      return ;
+    }
+    valueStr = NumberUtils.cleanNumberString(valueStr);
+
+    if(inputElement.value !== valueStr) {
+      row.patchValue({ [key]: valueStr });
       return ;
     }
 
-    if(valueStr.endsWith(",")) {
-      row.patchValue({ [key]: valueStr.replaceAll(",", ".") });
-      return ;
-    }
-
-    const valueNum = Number(valueStr);
+    const valueNum: number = NumberUtils.toNumber(valueStr);
     if(valueNum === 0) {
-      //When we have values as 0.0 or 0.00, we will get 0 but that will set the input as 0 making it annoying for the user.
+      //When we have values as 0.0 or 0.00, we will get 0 but that will
+      //set the input as 0 making it annoying for the user.
       return ;
     }
 
-    if (isNaN(valueNum)) {
-      setTimeout(() => (inputElement.value = ''), 100);
-      return;
-    }
-
-
+    // We can finally say that valueNum is a number
     row.patchValue({ [key]: valueNum });
+  }
 
-    // Check if the penultimate row is valid before adding a new row
+  checksOnUnfocus(index: number, key: keyof IRowSample, $event: Event): void {
+    $event.stopPropagation();
+    this._completeInputIfIsIncomplete(index, key, $event);
+    this._addCoRowIfPenultimateValueIsCorrect(index)
+  }
+
+  private _addCoRowIfPenultimateValueIsCorrect(index: number): void {
     const penultimateRowValid = this.rows().length > 1 && this.rows().at(this.rows().length - 2).valid;
     const userIsEditingLastRow = index === this.rows().length - 1;
     if (penultimateRowValid && userIsEditingLastRow) {
@@ -79,12 +84,23 @@ export class MwdSamplesComponent implements AfterViewInit {
     }
   }
 
+  private _completeInputIfIsIncomplete(index: number, key: keyof IRowSample, $event: Event): void {
+    const inputElement = $event.target as HTMLInputElement;
+    const row = this.rows().at(index);
+    let valueStr: string = inputElement.value;
+    if(NumberUtils.userIsStillIntroducing(valueStr)) {
+      valueStr = NumberUtils.completeInputIfIsIncomplete(valueStr);
+      row.patchValue({ [key]: valueStr });
+    }
+  }
+
+
   // Add a new row if the penultimate row is valid
   addRow(): void {
     this.rows().push(this._createRowFormGroup());
   }
 
-  removeRow() {
+  removeLastRow() {
     this.rows().removeAt(this.rows().length-1);
   }
 
@@ -99,26 +115,44 @@ export class MwdSamplesComponent implements AfterViewInit {
 
   // Convert UI data into a MapSamples object
   private _castUIToSample(): MapSamples {
-    const result: MapSamples = new Map();
-    this.rows().controls.forEach((row, index) => {
-      if (row.valid) {
-        result.set(index, row.value);
+    const introducedSamples: MapSamples = new Map();
+    for (let i = 0; i < this.rows().controls.length; i++) {
+      const row = this.rows().controls[i];
+      const rowSample = row.value as IRowSample;
+      rowSample.soilWeight = Number(NumberUtils.cleanNumberString(rowSample.soilWeight) );
+      rowSample.tamizDiameter = Number(NumberUtils.cleanNumberString(rowSample.tamizDiameter))
+
+      if(rowSample.soilWeight == 0 && rowSample.tamizDiameter == 0) {
+        this.removeLastRow();
+        continue;
       }
-    });
-    return result;
+
+      if(typeof rowSample.soilWeight !== 'number' || isNaN(rowSample.soilWeight)) {
+        throw new Error("The soilWeight sample '" + rowSample.soilWeight + "' is not a number");
+      }
+
+      if(typeof rowSample.tamizDiameter !== 'number' || isNaN(rowSample.tamizDiameter)) {
+        throw new Error("The tamizDiameter sample '" + rowSample.tamizDiameter + "' is not a number");
+      }
+
+      introducedSamples.set(i, rowSample);
+    }
+
+    console.log("introducedSamples", introducedSamples);
+
+    return introducedSamples;
   }
 
   private static readonly numberValidators = [
     Validators.required,
     Validators.min(0),
     Validators.max(100),
-    Validators.pattern(/^\d{1,8}(\.\d{1,8})?$/),
   ];
 
   private _createRowFormGroup(): FormGroup {
     return this.formBuilder.group({
-      tamizDiameter: ['', [...MwdSamplesComponent.numberValidators]],
-      soilWeight: ['', MwdSamplesComponent.numberValidators],
+      tamizDiameter: new FormControl<number | null>(null, [ ...MwdSamplesComponent.numberValidators ] ),
+      soilWeight:    new FormControl<number | null>(null, [ ...MwdSamplesComponent.numberValidators ] ),
     });
   }
 

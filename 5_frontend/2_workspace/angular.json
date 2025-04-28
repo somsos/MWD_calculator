@@ -93,6 +93,12 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
+
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+
             "scripts": []
           }
         }
