@@ -24,7 +24,8 @@
 - [X] Add history
 - [X] Check type of keyboard it shows in android
 - [X] Check inputs like 0.105 can get in without problems (when gets 0.10 transform it to 0.1)
-- [ ] Check input by keyboard in Firefox, and ensure that they get in like numbers and not like text
+- [X] Check input by keyboard in Firefox, and ensure that they get in like numbers and not like text
+- [ ] Create a description of how to test that the input by text is fire proof to introduce text or something that lead to text instead of number.
 - [ ] Set autofocus at first input
 - [ ] Make the icon image with background transparency, for future change of background color in the page
 - [ ] Transform comma in point

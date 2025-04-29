@@ -10,6 +10,8 @@ export abstract class NumberUtils {
   //point cases ej.: ".0", ".54321", comma cases ej.: ",5", ",98765"
   private static decimalIncompleteToTheRight = /^[\.,]{1}[0-9]{1,}$/;
 
+  private static isIntroducingADecimalThatEndsInCero = /^[0-9]{0,}[\.\,]{1}[0-9]{0,}[0]{1}$/
+
   public static cleanNumberString(input: string | number): string {
     input = NumberUtils._normalizeNumberString(input);
     const matches = input.match(NumberUtils.isANumberMaybeDecimal);
@@ -36,11 +38,15 @@ export abstract class NumberUtils {
       return true;
     }
 
-    if(input.match(NumberUtils.decimalIncompleteToTheLeft)) {
+    if( input.match(NumberUtils.decimalIncompleteToTheLeft) ) {
       return true;
     }
 
-    if(input.match(NumberUtils.decimalIncompleteToTheRight)) {
+    if( input.match(NumberUtils.decimalIncompleteToTheRight) ) {
+      return true;
+    }
+
+    if( input.match(NumberUtils.isIntroducingADecimalThatEndsInCero) ) {
       return true;
     }
 
