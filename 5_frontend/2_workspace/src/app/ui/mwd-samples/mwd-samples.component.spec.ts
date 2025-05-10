@@ -1,3 +1,5 @@
+import {describe, expect } from '@jest/globals';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MwdSamplesComponent } from './mwd-samples.component';

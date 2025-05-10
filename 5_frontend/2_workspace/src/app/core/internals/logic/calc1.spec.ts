@@ -1,9 +1,7 @@
-import { expect, test, beforeEach, describe } from '@jest/globals';
-
-import { MapSamples } from '../../../src/app/0shared';
-import { ICalculator } from '../../../src/app/core/internals/logic/ICalculator';
-import { CalculatorImpl } from '../../../src/app/core/internals/logic/CalculatorImpl';
-
+import { MapSamples } from "../../../0shared";
+import { CalculatorImpl } from "./CalculatorImpl";
+import { ICalculator } from "./ICalculator";
+import {describe, expect, test} from '@jest/globals';
 
 
 describe("ICalculator", () => {

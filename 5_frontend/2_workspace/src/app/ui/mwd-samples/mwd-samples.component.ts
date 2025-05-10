@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, computed, EventEmitter, inject, Output, signal, } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, computed, EventEmitter, inject, Output, signal, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { IRowSample, MapSamples } from "../../0shared";
 import { MaterialModule } from '../material.module';
 import { MwdHistoryComponent } from '../mwd-history/mwd-history.component';
 import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriverImpl';
 import { NumberUtils } from '../../0shared/internals/utils/NumberUtils';
+import { delay, filter, interval, Observable, of, repeat, startWith, take, takeUntil, takeWhile, tap } from 'rxjs';
 
 @Component({
     selector: 'app-mwd-samples',
@@ -41,6 +42,7 @@ export class MwdSamplesComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.addRow();
     this.addRow();
+    this._setFocusOnFirstInput();
   }
 
   // Update row based on index and key
@@ -77,11 +79,30 @@ export class MwdSamplesComponent implements AfterViewInit {
   }
 
   private _addCoRowIfPenultimateValueIsCorrect(index: number): void {
-    const penultimateRowValid = this.rows().length > 1 && this.rows().at(this.rows().length - 2).valid;
-    const userIsEditingLastRow = index === this.rows().length - 1;
-    if (penultimateRowValid && userIsEditingLastRow) {
-      this.addRow();
+    const userIsNotEditingLastRow = index !== (this.rows().length - 1);
+    if(userIsNotEditingLastRow) {
+      console.log("not editing");
+      return ;
     }
+
+    const penultimateRowNotValid = this._checkIfLastTamizDiameterIsValid();;
+    if (penultimateRowNotValid) {
+      return ;
+    }
+
+    this.addRow();
+  }
+
+  private _checkIfLastTamizDiameterIsValid(): boolean {
+    const lastTamizString = this.rows().at(this.rows().length - 1).getRawValue()?.tamizDiameter;
+    const lastTamizNumber = Number(lastTamizString);
+    console.log("lastValue",  lastTamizNumber);
+    const notANumber = typeof lastTamizNumber !== 'number';
+    if (notANumber) {
+        console.log("Not a number is " + typeof lastTamizNumber);
+
+    }
+    return notANumber;
   }
 
   private _completeInputIfIsIncomplete(index: number, key: keyof IRowSample, $event: Event): void {
@@ -90,6 +111,7 @@ export class MwdSamplesComponent implements AfterViewInit {
     let valueStr: string = inputElement.value;
     if(NumberUtils.userIsStillIntroducing(valueStr)) {
       valueStr = NumberUtils.completeInputIfIsIncomplete(valueStr);
+      inputElement.value = valueStr;
       row.patchValue({ [key]: valueStr });
     }
   }
@@ -173,6 +195,13 @@ export class MwdSamplesComponent implements AfterViewInit {
     if(addRows) {
       this.addRow();
       this.addRow();
+
+      // I delay because is too fast that it set the focus and then the focus stay at the button
+      let timer = setTimeout(() => {
+        this._setFocusOnFirstInput();
+        clearTimeout(timer);
+      }, 100);
+
     }
     this.resetClick.emit();
   }
@@ -181,6 +210,22 @@ export class MwdSamplesComponent implements AfterViewInit {
     const csvFile = ev.target.files[0];
     const sampleInCsv = await this._inDrv.parseFileToSamples(csvFile);
     this.insertSample(sampleInCsv);
+  }
+
+  private _setFocusOnFirstInput(): void {
+    of(null)
+      .pipe(
+        repeat({delay: 250}),
+        filter(() => document.querySelector('#first-input') != undefined ),
+        take(1),
+      )
+      .subscribe({
+        complete: () => {
+          const input = <HTMLInputElement>document.querySelector('#first-input');
+          input.focus();
+          console.debug("set focus on first input");
+        }
+      });
   }
 
 }

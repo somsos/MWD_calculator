@@ -20,6 +20,7 @@
               formControlName="tamizDiameter"
               type="text"
               inputmode="numeric"
+              [attr.id]="i == 0 ? 'first-input' : null"
               (input)="updateRow(i, 'tamizDiameter', $event)"
               (focusout)="checksOnUnfocus(i, 'tamizDiameter', $event)"
             />
@@ -63,6 +64,7 @@
       >Insertar csv</button>
 
     <button mat-flat-button
+      id='btn-calculate'
       color="primary"
       (click)="onClickSubmit()"
     >Calcular</button>
