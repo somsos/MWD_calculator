@@ -6,3 +6,5 @@ export type { IResultsDto } from "./internals/types/IResultsDto";
 
 export type { IInputDriver } from "./internals/drivers/IInputDriver";
 export type { IOutputDriver } from "./internals/drivers/IOutputDriver";
+
+export { TauriUtils } from "./internals/utils/TauriUtils";

@@ -36,11 +36,18 @@
     - [X] ".N.N" transformed to "N.N"
     - [X] "N..N" transformed to "N.N"
     - [X] "N.0N" it does not give problems.
-- [ ] Make the icon image with background transparency, for future change of background color in the page
+- [ ] Windows Bugs
+  - [ ] The insert csv button select a file but it doesn't read it
+- [X] Make the icon image with background transparency, for future change of background color in the page
+- [ ] Create installable as PWA
+- [ ] Executables
+  - [ ] Check icons in the executables
+  - [ ] Check icons in the installable
+  - [ ] Build android Apk
+  - [ ] Check if in notes speak about where is executable and installable path
+  - [ ] Integrate this project with the repository of Calc
 - [ ] Add button of add excel
 - [ ] Add button of download excel
-- [ ] Create build to change the manifest (in index.html) and worker (main.XXX.js) to the child path
-- [ ] Create installable as PWA
 
 <!-- 
 npm run desktop-make -- --arch="x64" --platform="win32
@@ -58,3 +65,15 @@ Agregar a que aprendí hoy: Evitar que se ejecute el evento click del padre al h
   </div>
 </div>
 -->
+
+
+
+
+## Tauri + Angular
+
+This template should help get you started developing with Tauri and Angular.
+
+### Recommended IDE Setup
+
+[VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) + [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template).
+

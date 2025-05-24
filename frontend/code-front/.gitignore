@@ -1,4 +1,11 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+#Custom
+**/keystore.properties
+**/build
+gradle
+**/*.jks
+**/*.zip
 
 # Compiled output
 /dist

@@ -1,6 +1,6 @@
-import { AfterContentChecked, AfterViewInit, Component, computed, EventEmitter, inject, Output, signal, } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, computed, ElementRef, EventEmitter, inject, Output, signal, ViewChild, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
-import { IRowSample, MapSamples } from "../../0shared";
+import { IRowSample, MapSamples, TauriUtils } from "../../0shared";
 import { MaterialModule } from '../material.module';
 import { MwdHistoryComponent } from '../mwd-history/mwd-history.component';
 import { InputDriverImpl } from '../../core/internals/inputDriver/impl/InputDriverImpl';
@@ -27,6 +27,9 @@ export class MwdSamplesComponent implements AfterViewInit {
   public readonly resetClick = new EventEmitter<void>();
 
   private readonly _inDrv = inject(InputDriverImpl);
+
+  @ViewChild('btnFileInput')
+  private _inputCsv: ElementRef | undefined;
 
   // Define the form group that holds the form array
   form = this.formBuilder.group({
@@ -227,5 +230,30 @@ export class MwdSamplesComponent implements AfterViewInit {
         }
       });
   }
+
+  public async onClickInsertCsv($event: Event): Promise<void> {
+    $event.stopPropagation();
+    if (TauriUtils.isTauriEnv()) {
+      console.log("starting csv selection on tauri");
+      const csv: File|null = await TauriUtils.selectAndReadFile();
+      if(!csv) {
+        console.warn("File not selected");
+        return ;
+      }
+      const sampleInCsv = await this._inDrv.parseFileToSamples(csv);
+      this.insertSample(sampleInCsv);
+      return ;
+    } else { // electron or normal browser
+      if(this._inputCsv == undefined) {
+        throw new Error("unexpected error, btn reference 'btnFileInput' do not exists");
+      }
+      var clickEvent = new MouseEvent("click");
+      (this._inputCsv.nativeElement as HTMLButtonElement).dispatchEvent(clickEvent);
+    }
+  }
+
+  // AI Generated
+  
+
 
 }

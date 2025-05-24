@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { IOutputDriver } from "../../../../0shared/internals/drivers/IOutputDriver";
-import { IResultsDto, MapSamples } from "../../../../0shared";
-
+import { IResultsDto, MapSamples, TauriUtils } from "../../../../0shared";
 
 /**
  * Note: To process the csv you can use:
@@ -23,12 +22,18 @@ export class OutputDriverImpl implements IOutputDriver {
 
   async resultsToCsv(r: IResultsDto, s: MapSamples): Promise<void> {
     const resultParsed: ResultItem = this._parceResults(r, s);
-
-    import("export-to-csv").then(eCsv => {
-      const csvConfig = eCsv.mkConfig(OutputDriverImpl.csvConf);
-      const csv = eCsv.generateCsv(csvConfig)(resultParsed);
-      eCsv.download(csvConfig)(csv);
-    });
+    const eCsv = await import("export-to-csv");
+    const csvConfig = eCsv.mkConfig(OutputDriverImpl.csvConf);
+    const csv = eCsv.generateCsv(csvConfig)(resultParsed);
+    
+    if (TauriUtils.isTauriEnv()) {
+      const csvBlob = eCsv.asBlob(csvConfig)(csv);
+      const data = await this._blob2uint(csvBlob);
+      this._downloadUsingTauri(data);
+      return ;
+    }
+    
+    eCsv.download(csvConfig)(csv);
   }
 
 
@@ -55,6 +60,32 @@ export class OutputDriverImpl implements IOutputDriver {
     parsed[0].MWDTotal = r.MWDTotal;
 
     return parsed;
+  }
+
+
+
+  private async _downloadUsingTauri(data: Uint8Array<ArrayBufferLike>): Promise<void> {
+    //Ask for folder where to save
+    const dialog = await import("@tauri-apps/plugin-dialog");
+    const path = await dialog.save({
+      defaultPath: 'result' + '.csv',
+      filters: [ { name: 'CSV Filter', extensions: ['csv'] }, ],
+    });
+
+    if(path == null) {
+      throw new Error("it could not generate scv path");
+    }
+
+    //Save/write file on selected path
+    const fs = await import("@tauri-apps/plugin-fs");
+    await fs.writeFile(path, data);
+  }
+
+
+  private async _blob2uint(blob: Blob): Promise<Uint8Array> {
+    const buffer = await new Response(blob).arrayBuffer();
+    const uint = new Uint8Array(buffer);
+    return uint;
   }
 
 }

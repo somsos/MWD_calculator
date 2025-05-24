@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "aone",
+  "version": "0.1.0",
+  "identifier": "com.aone.app",
+  "build": {
+    "devUrl": "http://192.168.43.250:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist/aone/browser"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "aone",
+        "width": 800,
+        "height": 600
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "../public/icons/32x32.png",
+      "../public/icons/128x128.png",
+      "../public/icons/128x128@2x.png",
+      "../public/icons/icon.icns",
+      "../public/icons/icon.ico"
+    ]
+  }
+}
