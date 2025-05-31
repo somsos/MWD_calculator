@@ -1,17 +1,17 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "aone",
+  "productName": "Calculadora MWD",
   "version": "0.1.0",
-  "identifier": "com.aone.app",
+  "identifier": "com.mwdCalculator.app",
   "build": {
     "devUrl": "http://192.168.43.250:1420",
     "beforeBuildCommand": "npm run build",
-    "frontendDist": "../dist/aone/browser"
+    "frontendDist": "../dist/mwdCalculator/browser"
   },
   "app": {
     "windows": [
       {
-        "title": "aone",
+        "title": "Calculadora MWD",
         "width": 800,
         "height": 600
       }

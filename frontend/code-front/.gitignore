@@ -6,6 +6,14 @@
 gradle
 **/*.jks
 **/*.zip
+**/*.exe
+**/*.apk
+**/*.dll
+**/*.pak
+**/*.bin
+**/*.dat
+**/*.so
+
 
 # Compiled output
 /dist

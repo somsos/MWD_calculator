@@ -1,7 +1,9 @@
 export abstract class TauriUtils {
 
-  public static isTauriEnv(): boolean {
-    return (window as any).isTauri;
+  public static isTauriMobileEnv(): boolean {
+    const isMobile = navigator.maxTouchPoints > 0;
+    const inTauri: boolean = (window as any).isTauri;
+    return inTauri && isMobile;
   }
 
   public static async selectAndReadFile(): Promise<File | null> {

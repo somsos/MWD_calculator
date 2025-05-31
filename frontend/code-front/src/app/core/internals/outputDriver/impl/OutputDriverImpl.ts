@@ -26,7 +26,7 @@ export class OutputDriverImpl implements IOutputDriver {
     const csvConfig = eCsv.mkConfig(OutputDriverImpl.csvConf);
     const csv = eCsv.generateCsv(csvConfig)(resultParsed);
     
-    if (TauriUtils.isTauriEnv()) {
+    if (TauriUtils.isTauriMobileEnv()) {
       const csvBlob = eCsv.asBlob(csvConfig)(csv);
       const data = await this._blob2uint(csvBlob);
       this._downloadUsingTauri(data);

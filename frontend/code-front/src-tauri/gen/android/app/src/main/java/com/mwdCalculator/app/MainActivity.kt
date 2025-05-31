@@ -1,3 +1,3 @@
-package com.aone.app
+package com.mwdCalculator.app
 
 class MainActivity : TauriActivity()

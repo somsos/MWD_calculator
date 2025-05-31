@@ -233,7 +233,7 @@ export class MwdSamplesComponent implements AfterViewInit {
 
   public async onClickInsertCsv($event: Event): Promise<void> {
     $event.stopPropagation();
-    if (TauriUtils.isTauriEnv()) {
+    if (TauriUtils.isTauriMobileEnv()) {
       console.log("starting csv selection on tauri");
       const csv: File|null = await TauriUtils.selectAndReadFile();
       if(!csv) {
