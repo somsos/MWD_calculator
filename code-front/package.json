@@ -32,7 +32,6 @@
     "@angular/material": "^19.2.0",
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
-    "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-dialog": "^2.2.1",
     "@tauri-apps/plugin-fs": "^2.2.1",
     "@tauri-apps/plugin-opener": "^2",
@@ -41,6 +40,7 @@
     "rxjs": "~7.8.0"
   },
   "devDependencies": {
+    "@tauri-apps/api": "^2",
     "@angular-devkit/build-angular": "^19.2.0",
     "@angular/cli": "^19.2.0",
     "@angular/compiler-cli": "^19.2.0",
