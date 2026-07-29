@@ -23,14 +23,14 @@ describe("ICalculator", () => {
     calc.setData(samplesRows1);
   })
 
-  test("calcTotalSoilWeight", () => {
+  it("calcTotalSoilWeight", () => {
     const expectedWeight = 117.73;
     const expectedGot: number = Number(calc.calcTotalSoilWeight().toFixed(2));
     expect(expectedGot).toEqual(expectedWeight);
   });
 
 
-  test("calcTamizDiameterProm()", () => {
+  it("calcTamizDiameterProm()", () => {
     // expected
     const soilWeightsExpected = [
       8.5,
@@ -64,7 +64,7 @@ describe("ICalculator", () => {
 
 
 
-  test("calcSoilPortions()", () => {
+  it("calcSoilPortions()", () => {
     // Expected
     const soilPortionsExpected = [
       // 0.027777778, //Careful: the length is 1 less that the samples
@@ -96,7 +96,7 @@ describe("ICalculator", () => {
 
 
 
-  test("calcMWDs()", () => {
+  it("calcMWDs()", () => {
     // Expected
     const MWDsExpected = [
       0.397095044,
@@ -127,7 +127,7 @@ describe("ICalculator", () => {
 
   });
 
-  test("calcMWDTotal()", () => {
+  it("calcMWDTotal()", () => {
     // Expected
     const MWDTotalExpected = 2.11;
 
