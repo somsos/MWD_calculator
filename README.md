@@ -19,13 +19,11 @@
 
 ## Introduction
 
-Calculator to calculate the mean weight diameter (MWD) of soil, based
-on the formulas mentioned in Van Bavel [1] and Yoder, R.E. [2]
-papers, This calculator was made in the Angular Framework, and to
-make it portable offline, I used Tauri and Electron tools to package
-the code on different executables that can be executed on Android,
-Windows, and Linux and keep the original Angular building process so
-it can be used as usual at any static web server.
+This App calculate the mean weight diameter (MWD) of soil, based on the formulas
+mentioned in Van Bavel [1] and Yoder, R.E. [2] papers, This calculator was made
+in the Angular Framework, and to make it portable offline, I used Tauri and
+Electron tools to package the code on different executables for Android, Linux,
+Windows and as SPA web app.
 
 ### Strategics and practices applied
 
@@ -195,7 +193,7 @@ $ groovy -version
 $ rustc --version
 # 1.86.0 (05f9846f8 2025-03-31)
 
-$ tauri --version
+$ npm run tauri --version
 # tauri-cli 2.5.0
 ```
 
