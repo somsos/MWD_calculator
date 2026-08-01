@@ -1,15 +1,25 @@
 {
-  "cSpell.words": [
-    "appimage",
-    "appindicator",
-    "distros",
-    "libayatana",
-    "librsvg",
-    "libwebkit",
-    "mantainable",
-    "msvc",
-    "mwdCalculator",
-    "nsis",
-    "rustc"
-  ]
+    "cSpell.words": [
+        "appimage",
+        "appindicator",
+        "Bavel",
+        "distros",
+        "Hombergs",
+        "libayatana",
+        "librsvg",
+        "libwebkit",
+        "msvc",
+        "nsis",
+        "rustc",
+        "Yoder"
+    ],
+    // "karmaTestExplorer.angularProcessCommand": "/home/mario/.nvm/versions/node/v26.5.1/bin/node /home/mario/.nvm/versions/node/v26.5.1/bin/npm exec -- ng test",
+    "karmaTestExplorer.env": {
+        "CHROME_BIN": "/usr/bin/brave",
+        "PATH": "/home/mario/.nvm/versions/node/v24.18.1/bin:${env:PATH}"
+    },
+    "karmaTestExplorer.karmaConfFilePath": "karma.conf.js",
+    "karmaTestExplorer.logLevel": "debug",
+    // "karmaTestExplorer.projectWorkspaces": ["code-front"]
+    
 }
