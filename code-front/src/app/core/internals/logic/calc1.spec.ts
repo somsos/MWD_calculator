@@ -64,8 +64,8 @@ describe("ICalculator", () => {
     // Test / Got
     const soilPortionsGot = calc.calcSoilPortions();
 
-    console.log("soilPortionsExpected", soilPortionsExpected);
-    console.log("soilPortionsGot", soilPortionsGot);
+    //console.log("soilPortionsExpected", soilPortionsExpected);
+    //console.log("soilPortionsGot", soilPortionsGot);
 
     // Assert
     expect(soilPortionsGot.length).toEqual(soilPortionsExpected.length);
@@ -94,8 +94,8 @@ describe("ICalculator", () => {
 
     // Test / Got
     const MWDsGot = calc.calcMWDs();
-    console.log("MWDsExpected", MWDsExpected);
-    console.log("MWDsGot", MWDsGot);
+    //console.log("MWDsExpected", MWDsExpected);
+    //console.log("MWDsGot", MWDsGot);
 
 
     // Assert

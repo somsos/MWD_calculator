@@ -3,10 +3,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "types": [
-      "node",
-      "jasmine"
-    ],
+    "ignoreDeprecations": "6.0",
+    "types": [ "node" ],
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,

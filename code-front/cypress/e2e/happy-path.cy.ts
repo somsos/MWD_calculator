@@ -12,7 +12,7 @@ describe('General working', () => {
       { tamizDiameter: "0.0",    soilWeight: "25.37"  },
     ]
 
-    cy.visit('http://localhost:4200/').wait(500);
+    cy.visit('/').wait(500);
 
     // need to check if automatically focus the first input.
     cy.get("body").type(happyPathSample[0].tamizDiameter);
