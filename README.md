@@ -15,6 +15,7 @@
       - [Build executables](#build-executables)
       - [Steps to deploy on cloud](#steps-to-deploy-on-cloud)
     - [Entity Relationship Objects](#entity-relationship-objects)
+    - [Required plugins in vsCode](#required-plugins-in-vscode)
   - [References](#references)
 
 ## Introduction
@@ -157,11 +158,11 @@ Here is an example commands to install it:
 3, Using sdkman install java and groovy for details use
 [this](https://sdkman.io/usage/#latest-stable) reference
 
-4, Install Android Studio and its dependencies using
-[this](https://developer.android.com/studio/install#linux) instructions
-
 4, Install Tauri following [these](https://v2.tauri.app/start/prerequisites/)
 instructions.
+
+5, Install Android Studio and its dependencies using
+[this](https://developer.android.com/studio/install#linux) instructions
 
 These instructions were follow on a Linux machine and the setup end up with
 these versions.
@@ -173,6 +174,9 @@ $ lsb_release -a
 
 $ node -v
 # v22.15.1
+
+$ npm -v
+# 11.17.0
 
 $ sdk version
 # script: 5.18.1
@@ -193,8 +197,17 @@ $ groovy -version
 $ rustc --version
 # 1.86.0 (05f9846f8 2025-03-31)
 
+$ cargo -V
+# cargo 1.97.1 (c980f4866 2026-06-30)
+
 $ npm run tauri --version
 # tauri-cli 2.5.0
+
+# add in linux to build for windows
+rustup target add x86_64-pc-windows-msvc
+cargo install cargo-xwin
+sudo pacman -S clang llvm lld
+paru -S nsis
 ```
 
 #### Prepare project
@@ -265,6 +278,17 @@ module have an public part and a private part.
 
 ![ER_Objects_diagram_implemented.png](./documentation/img/06_ER_Objects_diagram_implemented.png)
 
+### Required plugins in vsCode
+
+```yml
+- Name: Karma Test Explorer (for Angular, Jasmine, and Mocha)
+  Author: Lucas Ononiwu
+  Id: lucono.karma-test-explorer
+```
+
+
+
+
 ## References
 
 [1]: Van Bavel, C.H.M. 1949. Mean weight diameter of soil aggregates as a
@@ -272,3 +296,5 @@ sta s cal index of aggregation. Soil Sci. Soc. Am. J. 17, 416–418.
 
 [2]: Yoder, R.E. 1936. A direct method of aggregate analysis of soils and a study
 of the physical nature of erosion losses. J. Am. Soc. Agric. 28: 337–351.
+
+

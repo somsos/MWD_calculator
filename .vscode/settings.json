@@ -12,5 +12,6 @@
         "nsis",
         "rustc",
         "Yoder"
-    ]
+    ],
+    
 }

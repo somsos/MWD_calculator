@@ -1,5 +1,17 @@
 # ToDo
 
+## Now
+
+- [ ] Check why some unit tests are failing
+- [ ] Fix the appImage bundle "npm run tauri-build-lin-appImage"
+- [ ] En la ultima fila de la primer columna, siempre va cero
+  - ![alt](../documentation/inputs/secondRequests/CeroPorDefault.png)
+- [ ] extract the excel example to test
+- [ ] Check if I can use the excel to test my own set of data
+
+
+
+
 ## Out look
 
 - [X] Decide which technologies to use
