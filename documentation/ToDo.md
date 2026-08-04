@@ -4,6 +4,7 @@
 
 - [X] Extract the excel example to test
 - [X] Fix Calculation
+- [ ] Study the excel.
 - [ ] {"Look for/Genere"} a new example.
 - [ ] Understand how works that of adding a row
   - This value is the first one (0.165983606557) in the row and it should be the second onw that is 0.0614754098361)

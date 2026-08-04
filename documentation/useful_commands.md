@@ -1,4 +1,4 @@
-# What Did I learned
+# Useful Commands
 
 Evitar que se ejecute el evento click del padre al hacer click en un hijo.
 
@@ -28,7 +28,7 @@ Use just the CLI UnitTesting, Avoid ViTest on VSCode UI, the plugins are too new
 and the are unstable.
 
 Running a single file from the CLI
-npx ng test --no-watch --include=src/app/core/internals/logic/calc1.spec.ts
+npx ng test --no-watch --include=test/jest/core/
 
 Running a single method
 npx ng test --no-watch --test-name-pattern="calcTotalSoilWeight"

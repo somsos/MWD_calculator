@@ -1,6 +1,5 @@
 import { MapSamples } from "../../../0shared";
-import { CalculatorImpl } from "./CalculatorImpl";
-import { ICalculator } from "./ICalculator";
+import { testCalc } from "./CalculatorImpl_utils.spec";
 
 
 
@@ -64,62 +63,13 @@ describe("ICalculator", () => {
   const MWDTotalExpected = 1.924866807;
   
 
-  
-
-  let calc: ICalculator;
-  beforeEach(()=> {
-    calc = new CalculatorImpl();
-    calc.setData(samplesRows1);
-  })
-
-  it("calcTotalSoilWeight", () => {
-    const getWeight: number = calc.calcTotalSoilWeight(); // Test / Got
-    expect(getWeight).toEqual(expectedWeight);
-  });
-
-
-  it("calcTamizDiameterProm()", () => {
-    const tamizDiameterPromGot: Array<number> = calc.calcTamizDiameterProm(); // Test / Got
-    expect(tamizDiameterPromGot.length).toEqual(soilWeightsExpected.length);
-    //console.log("tamizDiameterPromGot", tamizDiameterPromGot);
-    //console.log("soilWeightsExpected", soilWeightsExpected);
-    for (let i = 0; i < tamizDiameterPromGot.length; i++) {
-      const TD_got = tamizDiameterPromGot[i];
-      const TD_expected = soilWeightsExpected[i];
-      expect(TD_got).toEqual(TD_expected);
-    }
-  });
-
-
-  it("calcSoilPortions()", () => {
-    const soilPortionsGot = calc.calcSoilPortions();// Test / Got
-    //console.log("soilPortionsExpected", soilPortionsExpected);
-    //console.log("soilPortionsGot", soilPortionsGot);
-    expect(soilPortionsGot.length).toEqual(soilPortionsExpected.length);
-    for (let i = 0; i < soilPortionsGot.length; i++) {
-      const SP_got = soilPortionsGot[i];
-      const SP_Expected = soilPortionsExpected[i];
-      expect(SP_got).toEqual(SP_Expected);
-    }
-  });
-
-
-
-  it("calcMWDs()", () => {
-    const MWDsGot = calc.calcMWDs();  // Test / Got
-    //console.log("MWDsExpected", MWDsExpected);
-    //console.log("MWDsGot", MWDsGot);
-    expect(MWDsGot.length).toEqual(MWDsExpected.length);
-    for (let i = 0; i < MWDsGot.length; i++) {
-      const MWDGot = MWDsGot[i];
-      const MWDExpected = MWDsExpected[i];
-      expect(MWDGot).toEqual(MWDExpected);
-    }
-  });
-
-  it("calcMWDTotal()", () => {
-    const MWDTotal = calc.calcMWDTotal(); // Test / Got
-    expect(MWDTotal).toEqual(MWDTotalExpected);
-  });
+  testCalc(
+      samplesRows1,
+      expectedWeight,
+      soilWeightsExpected,
+      soilPortionsExpected,
+      MWDsExpected,
+      MWDTotalExpected
+  );
 
 })

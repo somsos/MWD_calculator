@@ -50,7 +50,7 @@ class CalculatorImpl implements ICalculator {
 
   setData(samplesRows: MapSamples): void {
     this._samplesRows = samplesRows;
-    this._adustPrecisionSample();
+    this._adjustPrecisionSample();
   }
   
   calcTotalSoilWeight(): number {
@@ -81,7 +81,7 @@ class CalculatorImpl implements ICalculator {
     const totalSoilWeight: number = this.calcTotalSoilWeight();
     const soilPortions = soilWeights.map(sp => {      
       const divRaw = sp / totalSoilWeight;
-      const divFixed =  this._adustPrecision(Number(divRaw.toFixed(9)));
+      const divFixed =  this._adjustPrecision(Number(divRaw.toFixed(9)));
       return divFixed;
     });
     return soilPortions;
@@ -100,7 +100,7 @@ class CalculatorImpl implements ICalculator {
       const soilWeight = soilWeights[i];
       const soilPortion = soilPortions[i];
       const multiRaw = soilWeight * soilPortion;
-      const multiFixed = this._adustPrecision(multiRaw);
+      const multiFixed = this._adjustPrecision(multiRaw);
       resp.push(multiFixed);
     }
     
@@ -126,12 +126,12 @@ class CalculatorImpl implements ICalculator {
     return  all;
   }
 
-  private _adustPrecision(original: number): number {
+  private _adjustPrecision(original: number): number {
     const fixed = Number(original.toFixed(CalculatorImpl.precision));
     return fixed;
   }
 
-  private _adustPrecisionSample(): void {
+  private _adjustPrecisionSample(): void {
     this._samplesRows.values()
   }
 

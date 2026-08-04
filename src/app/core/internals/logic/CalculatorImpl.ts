@@ -8,11 +8,11 @@ export class CalculatorImpl implements ICalculator {
 
   private readonly _results: IResultsDto = ResultsDtoUtils.getEmptyResults();
 
-  private readonly _printProcess: boolean = true;
+  private readonly _printProcess: boolean = false;
 
   setData(samplesRows: MapSamples): void {
     this._samplesRows = samplesRows;
-    this._adustPrecisionSample();
+    this._adjustPrecisionSample();
     if(ResultsDtoUtils.itHasProcessedData(this._results)) {
       ResultsDtoUtils.cleanResults(this._results);
     }
@@ -30,6 +30,7 @@ export class CalculatorImpl implements ICalculator {
     soilWeights.forEach((weight) => {
       resp = resp + weight;
     });
+    resp = NumberUtils.adjustPrecision(resp);
     this._results.totalSoilWeight = resp;
     return this._results.totalSoilWeight;
   }
@@ -47,7 +48,7 @@ export class CalculatorImpl implements ICalculator {
       const nextDiameter = tDiameters[i+1];
       const sum = currentDiam + nextDiameter;
       const rawDiv = sum / 2;
-      const prom = NumberUtils.adustPrecision(rawDiv);
+      const prom = NumberUtils.adjustPrecision(rawDiv);
       resp.push(prom);
     }
     this._results.tamizDiameterProm = resp;
@@ -65,7 +66,7 @@ export class CalculatorImpl implements ICalculator {
     const totalSoilWeight: number = this.calcTotalSoilWeight();
     const soilPortions = soilWeights.map(sp => {
       const divRaw = sp / totalSoilWeight;
-      const divFixed =  NumberUtils.adustPrecision(divRaw);
+      const divFixed =  NumberUtils.adjustPrecision(divRaw);
       return divFixed;
     });
 
@@ -103,7 +104,7 @@ export class CalculatorImpl implements ICalculator {
       if (this._printProcess) {
         console.log(`${soilWeight} * ${soilPortion} = ${multiRaw}`);
       }
-      const multiFixed = NumberUtils.adustPrecision(multiRaw);
+      const multiFixed = NumberUtils.adjustPrecision(multiRaw);
       resp.push(multiFixed);
     }
 
@@ -122,7 +123,7 @@ export class CalculatorImpl implements ICalculator {
     for (let i = 0; i < MWDs.length; i++) {
       resp = resp + MWDs[i];
     }
-    resp = NumberUtils.adustPrecision(resp);
+    resp = NumberUtils.adjustPrecision(resp);
 
     this._results.MWDTotal = resp;
     return this._results.MWDTotal;
@@ -143,7 +144,7 @@ export class CalculatorImpl implements ICalculator {
     return  all;
   }
 
-  private _adustPrecisionSample(): void {
+  private _adjustPrecisionSample(): void {
     this._samplesRows.values()
   }
 

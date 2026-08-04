@@ -97,7 +97,7 @@ export abstract class NumberUtils {
     return input;
   }
 
-  public static adustPrecision(original: number): number {
+  public static adjustPrecision(original: number): number {
     const fixed = Number(original.toFixed(NumberUtils.precision));
     return fixed;
   }
