@@ -21,3 +21,15 @@ avoid this problem.
   </div>
 </div>
 ```
+
+## ANgular 21 migrated from jasmine/karma/webpack to viTest and cypress-vite
+
+Use just the CLI UnitTesting, Avoid ViTest on VSCode UI, the plugins are too new
+and the are unstable.
+
+Running a single file from the CLI
+npx ng test --no-watch --include=src/app/core/internals/logic/calc1.spec.ts
+
+Running a single method
+npx ng test --no-watch --test-name-pattern="calcTotalSoilWeight"
+

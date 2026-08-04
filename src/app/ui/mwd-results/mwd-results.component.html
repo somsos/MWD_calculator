@@ -6,9 +6,6 @@
         <h3 id='text-result'>{{ results()?.MWDTotal }}</h3>
       </mat-card-content>
     </mat-card>
-
-    <button mat-raised-button color="accent" (click)="onClickDownloadEvent()">Descargar CSV</button>
-
     <mat-card class="one-number-result">
       <mat-card-title>Peso de suelo Total (g)</mat-card-title>
       <mat-card-content>
@@ -107,7 +104,8 @@
   </div>
 
 }
-<div style='text-align: center;'>
+<div style='text-align: center; margin-top: 1rem;'>
+  <button mat-raised-button color="accent" (click)="onClickDownloadEvent()">Descargar CSV</button>
   <ul>
     <li><b>MWDi</b> = Diámetro medio ponderado individual</li>
     <li><b>PeSu</b> = Peso de suelo</li>

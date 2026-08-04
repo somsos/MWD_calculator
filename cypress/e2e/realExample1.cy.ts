@@ -1,6 +1,8 @@
+import { ISample, inputAllSamples } from "./CyHelper";
+
 describe('General working', () => {
 
-  it('Happy path', () => {
+  it('Real Example 1', () => {
     const happyPathSample: ISample[] = [
       { tamizDiameter: "8.0",    soilWeight: "0.0"    },
       { tamizDiameter: "4.0",    soilWeight: "3.4"    },
@@ -30,22 +32,4 @@ describe('General working', () => {
 
   })
 
-})
-
-function inputNextCell(sample: string) {
-  cy.press(Cypress.Keyboard.Keys.TAB);
-  cy.get("body").type(sample);
-}
-
-function inputAllSamples(samples: ISample[]) {
-  for (let i = 0; i < samples.length; i++) {
-    inputNextCell(samples[i].tamizDiameter);
-    inputNextCell(samples[i].soilWeight);
-  }
-}
-
-interface ISample {
-  tamizDiameter: string,
-  soilWeight: string,
-}
-
+});

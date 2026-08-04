@@ -1,6 +1,8 @@
 
 export abstract class NumberUtils {
 
+  private static readonly precision = 9;
+
   // "1.1", "12345.09876", "12345."
   private static isANumberMaybeDecimal = /[0-9]{1,}[\.]{0,1}[0-9]{0,}/g;
 
@@ -93,6 +95,11 @@ export abstract class NumberUtils {
     }
 
     return input;
+  }
+
+  public static adustPrecision(original: number): number {
+    const fixed = Number(original.toFixed(NumberUtils.precision));
+    return fixed;
   }
 
 }

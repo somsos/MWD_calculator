@@ -1,4 +1,5 @@
 import { IResultsDto, MapSamples, ResultsDtoUtils } from "../../../0shared";
+import { NumberUtils } from "../../../0shared/internals/utils/NumberUtils";
 import { ICalculator } from "./ICalculator";
 
 export class CalculatorImpl implements ICalculator {
@@ -7,7 +8,7 @@ export class CalculatorImpl implements ICalculator {
 
   private readonly _results: IResultsDto = ResultsDtoUtils.getEmptyResults();
 
-  private static readonly precision = 9;
+  private readonly _printProcess: boolean = true;
 
   setData(samplesRows: MapSamples): void {
     this._samplesRows = samplesRows;
@@ -45,7 +46,8 @@ export class CalculatorImpl implements ICalculator {
       const currentDiam= tDiameters[i];
       const nextDiameter = tDiameters[i+1];
       const sum = currentDiam + nextDiameter;
-      const prom = sum / 2;
+      const rawDiv = sum / 2;
+      const prom = NumberUtils.adustPrecision(rawDiv);
       resp.push(prom);
     }
     this._results.tamizDiameterProm = resp;
@@ -59,17 +61,20 @@ export class CalculatorImpl implements ICalculator {
     }
 
     const soilWeights = this._getSoilWeights();
-    soilWeights.shift();
+    //soilWeights.shift(); // remove first row.
     const totalSoilWeight: number = this.calcTotalSoilWeight();
     const soilPortions = soilWeights.map(sp => {
       const divRaw = sp / totalSoilWeight;
-      const divFixed =  this._adustPrecision(Number(divRaw.toFixed(9)));
+      const divFixed =  NumberUtils.adustPrecision(divRaw);
       return divFixed;
     });
 
     this._results.soilPortions = soilPortions;
     return this._results.soilPortions;
   }
+
+
+
 
   calcMWDs(): Array<number> {
     // check it was already calculated, and if so, return it
@@ -79,21 +84,31 @@ export class CalculatorImpl implements ICalculator {
 
     const soilWeights: Array<number> = this.calcTamizDiameterProm();
     const soilPortions: Array<number> = this.calcSoilPortions();
+    soilWeights.push(0);
+    //console.log("soilWeights", soilWeights);
+    //console.log("soilPortions", soilPortions);
 
     if(soilWeights.length != soilPortions.length) {
       throw new Error("unexpected: soilWeights.length != soilPortions.length");
     }
 
+    if (this._printProcess) {
+      console.log(`soilWeight * soilPortion = Resp`);
+    }
     const resp: number[] = [];
     for (let i = 0; i < soilWeights.length; i++) {
       const soilWeight = soilWeights[i];
       const soilPortion = soilPortions[i];
       const multiRaw = soilWeight * soilPortion;
-      const multiFixed = this._adustPrecision(multiRaw);
+      if (this._printProcess) {
+        console.log(`${soilWeight} * ${soilPortion} = ${multiRaw}`);
+      }
+      const multiFixed = NumberUtils.adustPrecision(multiRaw);
       resp.push(multiFixed);
     }
 
     this._results.MWDs = resp;
+    console.log("MWDs", resp);
     return this._results.MWDs;
   }
 
@@ -107,11 +122,17 @@ export class CalculatorImpl implements ICalculator {
     for (let i = 0; i < MWDs.length; i++) {
       resp = resp + MWDs[i];
     }
+    resp = NumberUtils.adustPrecision(resp);
 
     this._results.MWDTotal = resp;
     return this._results.MWDTotal;
   }
 
+
+
+
+
+  // PRIVATE METHODS
   private _getTamizDiameters(): number[] {
     const all = Array.from(this._samplesRows.values()).map(v => v.tamizDiameter);
     return all;
@@ -120,11 +141,6 @@ export class CalculatorImpl implements ICalculator {
   private _getSoilWeights(): Array<number> {
     const all = Array.from(this._samplesRows.values()).map(v => v.soilWeight);
     return  all;
-  }
-
-  private _adustPrecision(original: number): number {
-    const fixed = Number(original.toFixed(CalculatorImpl.precision));
-    return fixed;
   }
 
   private _adustPrecisionSample(): void {

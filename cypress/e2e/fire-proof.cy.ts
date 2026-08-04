@@ -72,7 +72,7 @@ describe('Fire proof', () => {
 
       ];
 
-    cy.visit('http://localhost:4200/').wait(500);
+    cy.visit('/').wait(500);
 
     // First is different because we expected that the focus is automatically set on the first input
     const firstCase: CleanStNumberTestCase = {
