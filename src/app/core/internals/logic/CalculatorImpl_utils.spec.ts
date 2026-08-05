@@ -36,8 +36,8 @@ export function testCalc(
   it("calcTamizDiameterProm()", () => {
     const tamizDiameterPromGot: Array<number> = calc.calcTamizDiameterProm(); // Test / Got
     expect(tamizDiameterPromGot.length).toEqual(soilWeightsExpected.length);
-    //console.log("tamizDiameterPromGot", tamizDiameterPromGot);
     //console.log("soilWeightsExpected", soilWeightsExpected);
+    //console.log("soilWeightsGot", tamizDiameterPromGot);
     for (let i = 0; i < tamizDiameterPromGot.length; i++) {
       const TD_got = tamizDiameterPromGot[i];
       const TD_expected = soilWeightsExpected[i];

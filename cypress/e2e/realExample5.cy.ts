@@ -4,16 +4,16 @@ describe('General working', () => {
 
   it('Real Example 1', () => {
     const happyPathSample: ISample[] = [
-      { tamizDiameter: "10.0",  soilWeight: "0.0" },
-      { tamizDiameter: "7.0",  soilWeight: "5.5" },
-      { tamizDiameter: "5.5",  soilWeight: "0.25" },
-      { tamizDiameter: "4.4",  soilWeight: "20.11" },
-      { tamizDiameter: "1.1",  soilWeight: "31.50" },
-      { tamizDiameter: "0.25",  soilWeight: "10.05" },
-      { tamizDiameter: "0.10",  soilWeight: "35.10" },
-      { tamizDiameter: "0.05",  soilWeight: "15.22" },
+      { tamizDiameter: "6.36", soilWeight: "30" },
+      { tamizDiameter: "4.76", soilWeight: "81" },
+      { tamizDiameter: "3.36", soilWeight: "85" },
+      { tamizDiameter: "2.0",  soilWeight: "84" },
+      { tamizDiameter: "1.0",  soilWeight: "73" },
+      { tamizDiameter: "0.5",  soilWeight: "83" },
+      { tamizDiameter: "0.25", soilWeight: "32" },
+      { tamizDiameter: "0.0",  soilWeight: "20" },
     ]
-    const result:string = "0.990136327";
+    const result:string = "1.924866807";
 
     cy.visit('/').wait(500);
 

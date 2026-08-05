@@ -4,15 +4,13 @@
 
 - [X] Extract the excel example to test
 - [X] Fix Calculation
-- [ ] Study the excel.
-- [ ] {"Look for/Genere"} a new example.
+- [X] {"Look for/Genere"} a new example.
+- [X] Check why some unit tests are failing
 - [ ] Understand how works that of adding a row
   - This value is the first one (0.165983606557) in the row and it should be the second onw that is 0.0614754098361)
-- [ ] Check why some unit tests are failing
 - [ ] Fix the appImage bundle "npm run tauri-build-lin-appImage"
 - [ ] En la ultima fila de la primer columna, siempre va cero
   - ![alt](../documentation/inputs/secondRequests/CeroPorDefault.png)
-- [ ] Check if I can use the excel to test my own set of data
 
 
 

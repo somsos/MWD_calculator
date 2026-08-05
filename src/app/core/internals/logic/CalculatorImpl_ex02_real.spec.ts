@@ -16,6 +16,10 @@ describe("ICalculator", () => {
     [ 6, { tamizDiameter: 0.10,  soilWeight: 35.10 }  ],
     [ 7, { tamizDiameter: 0.05,  soilWeight: 15.22 }  ],
   ]);
+
+  // It's the sum of all the MWDsExpected values
+  // 0.397095044 + 0.013271894 + 0.845532151 + 0.735793765 + 0.057621252 + 0.052174467 + 0.009695914 + 0.0 = 0.9901363269
+  const MWDTotalExpected = 0.990136327;
   
   // It's the sum of all the soilWeight values
   // 0.0 + 5.5 + 0.25 + 20.11 + 31.50 + 10.05 + 35.10 + 15.22 = 117.73
@@ -59,11 +63,6 @@ describe("ICalculator", () => {
     0.022360486, // 7. 0.075 * 0.298139811 = 0.022360485825
     0.0        , // 8. 0 * 0.129278858 = 0.0
   ];
-  
-
-  // It's the sum of all the MWDsExpected values
-  // 0.397095044 + 0.013271894 + 0.845532151 + 0.735793765 + 0.057621252 + 0.052174467 + 0.009695914 + 0.0 = 0.9901363269
-  const MWDTotalExpected = 0.990136327;
 
 
   testCalc(

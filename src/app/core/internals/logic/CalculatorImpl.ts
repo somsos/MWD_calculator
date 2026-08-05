@@ -86,8 +86,10 @@ export class CalculatorImpl implements ICalculator {
     const soilWeights: Array<number> = this.calcTamizDiameterProm();
     const soilPortions: Array<number> = this.calcSoilPortions();
     soilWeights.push(0);
-    //console.log("soilWeights", soilWeights);
-    //console.log("soilPortions", soilPortions);
+    if (this._printProcess) {
+      console.log("soilWeights", soilWeights);
+      console.log("soilPortions", soilPortions);
+    }
 
     if(soilWeights.length != soilPortions.length) {
       throw new Error("unexpected: soilWeights.length != soilPortions.length");
@@ -109,7 +111,9 @@ export class CalculatorImpl implements ICalculator {
     }
 
     this._results.MWDs = resp;
-    console.log("MWDs", resp);
+    if (this._printProcess) {
+      console.log("MWDs", resp);
+    }
     return this._results.MWDs;
   }
 
