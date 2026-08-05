@@ -3,44 +3,45 @@ import { NumberUtils } from "../../../0shared/internals/utils/NumberUtils";
 import { CalculatorImpl } from "./CalculatorImpl";
 import { ICalculator } from "./ICalculator";
 
+export interface TestCalcCaseData {
+  inputSamples: MapSamples
+  MWDTotalExpected: number;
+  expectedWeight: number;
+  soilWeightsExpected: number[];
+  soilPortionsExpected: number[];
+  MWDsExpected: number[];
+}
 
 
-export function testCalc(
-  samples: MapSamples,
-  expectedWeight: number,
-  soilWeightsExpected: number[],
-  soilPortionsExpected: number[],
-  MWDsExpected: number[],
-  MWDTotalExpected: number) 
-{
+export function testCalc(tCase: TestCalcCaseData) {
 
-  adjustSample(samples);
-  expectedWeight = NumberUtils.adjustPrecision(expectedWeight);
-  soilWeightsExpected = soilWeightsExpected.map((value) => NumberUtils.adjustPrecision(value));
-  soilPortionsExpected = soilPortionsExpected.map((value) => NumberUtils.adjustPrecision(value));
-  MWDsExpected = MWDsExpected.map((value) => NumberUtils.adjustPrecision(value));
-  MWDTotalExpected = NumberUtils.adjustPrecision(MWDTotalExpected);
+  adjustSample(tCase.inputSamples);
+  tCase.expectedWeight = NumberUtils.adjustPrecision(tCase.expectedWeight);
+  tCase.soilWeightsExpected = tCase.soilWeightsExpected.map((value) => NumberUtils.adjustPrecision(value));
+  tCase.soilPortionsExpected = tCase.soilPortionsExpected.map((value) => NumberUtils.adjustPrecision(value));
+  tCase.MWDsExpected = tCase.MWDsExpected.map((value) => NumberUtils.adjustPrecision(value));
+  tCase.MWDTotalExpected = NumberUtils.adjustPrecision(tCase.MWDTotalExpected);
 
   let calc: ICalculator;
   beforeEach(()=> {
     calc = new CalculatorImpl();
-    calc.setData(samples);
+    calc.setData(tCase.inputSamples);
   })
 
   it("calcTotalSoilWeight", () => {
     const getWeight: number = calc.calcTotalSoilWeight(); // Test / Got
-    expect(getWeight).toEqual(expectedWeight);
+    expect(getWeight).toEqual(tCase.expectedWeight);
   });
 
 
   it("calcTamizDiameterProm()", () => {
     const tamizDiameterPromGot: Array<number> = calc.calcTamizDiameterProm(); // Test / Got
-    expect(tamizDiameterPromGot.length).toEqual(soilWeightsExpected.length);
+    expect(tamizDiameterPromGot.length).toEqual(tCase.soilWeightsExpected.length);
     //console.log("soilWeightsExpected", soilWeightsExpected);
     //console.log("soilWeightsGot", tamizDiameterPromGot);
     for (let i = 0; i < tamizDiameterPromGot.length; i++) {
       const TD_got = tamizDiameterPromGot[i];
-      const TD_expected = soilWeightsExpected[i];
+      const TD_expected = tCase.soilWeightsExpected[i];
       expect(TD_got).toEqual(TD_expected);
     }
   });
@@ -50,10 +51,10 @@ export function testCalc(
     const soilPortionsGot = calc.calcSoilPortions();// Test / Got
     //console.log("soilPortionsExpected", soilPortionsExpected);
     //console.log("soilPortionsGot", soilPortionsGot);
-    expect(soilPortionsGot.length).toEqual(soilPortionsExpected.length);
+    expect(soilPortionsGot.length).toEqual(tCase.soilPortionsExpected.length);
     for (let i = 0; i < soilPortionsGot.length; i++) {
       const SP_got = soilPortionsGot[i];
-      const SP_Expected = soilPortionsExpected[i];
+      const SP_Expected = tCase.soilPortionsExpected[i];
       expect(SP_got).toEqual(SP_Expected);
     }
   });
@@ -64,17 +65,17 @@ export function testCalc(
     const MWDsGot = calc.calcMWDs();  // Test / Got
     //console.log("MWDsExpected", MWDsExpected);
     //console.log("MWDsGot", MWDsGot);
-    expect(MWDsGot.length).toEqual(MWDsExpected.length);
+    expect(MWDsGot.length).toEqual(tCase.MWDsExpected.length);
     for (let i = 0; i < MWDsGot.length; i++) {
       const MWDGot = MWDsGot[i];
-      const MWDExpected = MWDsExpected[i];
+      const MWDExpected = tCase.MWDsExpected[i];
       expect(MWDGot).toEqual(MWDExpected);
     }
   });
 
   it("calcMWDTotal()", () => {
     const MWDTotal = calc.calcMWDTotal(); // Test / Got
-    expect(MWDTotal).toEqual(MWDTotalExpected);
+    expect(MWDTotal).toEqual(tCase.MWDTotalExpected);
   });
 
 }

@@ -8,7 +8,7 @@ export class CalculatorImpl implements ICalculator {
 
   private readonly _results: IResultsDto = ResultsDtoUtils.getEmptyResults();
 
-  private readonly _printProcess: boolean = false;
+  private readonly _printProcess: boolean = true;
 
   setData(samplesRows: MapSamples): void {
     this._samplesRows = samplesRows;
