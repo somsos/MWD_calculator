@@ -2,20 +2,14 @@
 
 ## Now
 
-- [X] Extract the excel example to test
-- [X] Fix Calculation
-- [X] {"Look for/Genere"} a new example.
-- [X] Check why some unit tests are failing
-- [ ] Understand how works that of adding a row
-  - This value is the first one (0.165983606557) in the row and it should be the second onw that is 0.0614754098361)
-- [ ] Fix the appImage bundle "npm run tauri-build-lin-appImage"
+- [ ] When the user introduces a 0 in "Diámetro tamiz", so it's the last row.
 - [ ] En la ultima fila de la primer columna, siempre va cero
   - ![alt](../documentation/inputs/secondRequests/CeroPorDefault.png)
+- [ ] Understand how works that of adding a row
+- [ ] Fix the appImage bundle "npm run tauri-build-lin-appImage"
 
 
-
-
-## Out look
+## Big Picture
 
 - [X] Decide which technologies to use
 - [X] Create backlog (user histories)
@@ -29,9 +23,17 @@
 - [ ] Develop Input adapter (User interface)
 - [ ] Develop Output adapter (Database)
 - [ ] Stick together the three layers.
+- [ ] Create installable as PWA
+- [ ] Add button of add excel
+- [ ] Add button of download excel
 
-## Inner look
 
+## Done
+
+- [X] Extract the excel example to test
+- [X] Fix Calculation
+- [X] {"Look for/Genere"} a new example.
+- [X] Check why some unit tests are failing
 - [X] Add button of clean
 - [X] Add button of download csv
 - [X] Add button of add csv
@@ -59,6 +61,3 @@
   - [X] Build android Apk
   - [X] Check if in notes speak about where is executable and installable path
   - [X] Integrate this project with the repository of Calc
-- [ ] Create installable as PWA
-- [ ] Add button of add excel
-- [ ] Add button of download excel

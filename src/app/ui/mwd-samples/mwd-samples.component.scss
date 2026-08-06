@@ -24,6 +24,7 @@
     }
 
     th, td {
+      vertical-align: top;
       border: 1px solid #ccc;
       padding: 4px 8px;
       text-align: center;
@@ -65,3 +66,11 @@
 
 }
 
+
+.hint-msg {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.01rem;
+  text-align: start;
+  font-size: x-small;
+}

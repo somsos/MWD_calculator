@@ -41,6 +41,7 @@ export class MwdSamplesComponent implements AfterViewInit {
   readonly displayedColumns = ['tamizDiameter', 'soilWeight'];
 
   public readonly showHistory$ = signal(false);
+  public readonly tamizZeroCheck$ = signal(false);
 
   ngAfterViewInit(): void {
     this.addRow();
@@ -93,20 +94,42 @@ export class MwdSamplesComponent implements AfterViewInit {
       return ;
     }
 
+    const checkIsZero = this._IfLastTamizDiameterIsZeroUserIsIntroducingLastRow();
+    this.tamizZeroCheck$.set(checkIsZero);
+    if (checkIsZero) {
+      this.rows().at(this.rows().length - 1).get('tamizDiameter')?.setValue('0');
+      return ;
+    }
+
     this.addRow();
   }
 
   private _checkIfLastTamizDiameterIsValid(): boolean {
-    const lastTamizString = this.rows().at(this.rows().length - 1).getRawValue()?.tamizDiameter;
-    const lastTamizNumber = Number(lastTamizString);
-    console.log("lastValue",  lastTamizNumber);
+    const lastTamizNumber = this._getLastRowTamizValue();
     const notANumber = typeof lastTamizNumber !== 'number';
     if (notANumber) {
         console.log("Not a number is " + typeof lastTamizNumber);
-
     }
     return notANumber;
   }
+
+  private _IfLastTamizDiameterIsZeroUserIsIntroducingLastRow(): boolean {
+    // At this point We should already checked if is a number
+    const lastTamizNumber = this._getLastRowTamizValue();
+    const isZero = lastTamizNumber === 0;
+    if (isZero) {
+        console.log("Last Tamiz Diameter Is Zero, what means the User intention is introduce the last row");
+    }
+    return isZero;
+  }
+
+  private _getLastRowTamizValue(): number {
+    const lastTamizString = this.rows().at(this.rows().length - 1).getRawValue()?.tamizDiameter;
+    const lastTamizNumber = Number(lastTamizString);
+    //console.log(`Last row tamiz value got str:${lastTamizString} num: ${lastTamizNumber}`);
+    return lastTamizNumber;
+  }
+
 
   private _completeInputIfIsIncomplete(index: number, key: keyof IRowSample, $event: Event): void {
     const inputElement = $event.target as HTMLInputElement;

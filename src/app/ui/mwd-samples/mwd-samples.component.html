@@ -24,6 +24,9 @@
               (input)="updateRow(i, 'tamizDiameter', $event)"
               (focusout)="checksOnUnfocus(i, 'tamizDiameter', $event)"
             />
+            <div class="hint-msg" *ngIf="tamizZeroCheck$() && i == rows().length-1">
+              Si aquí es 0, se considera es la ultima fila.
+            </div>
           </td>
           <td>
             <input
