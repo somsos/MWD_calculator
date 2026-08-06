@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './mwd-history.component.html',
   styleUrl: './mwd-history.component.scss'
 })
-export class MwdHistoryComponent {
+export class MwdHistoryComponent {  
 
   @Output()
   public readonly recordClick = new EventEmitter<MapSamples>();
@@ -44,6 +44,10 @@ export class MwdHistoryComponent {
 
   onClickBackFromHistory() {
     this.backFromHistory.emit();
+  }
+
+  indexInExampleRange(i: number): boolean {
+    return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5 || i === 6 || i === 7)
   }
 
 }

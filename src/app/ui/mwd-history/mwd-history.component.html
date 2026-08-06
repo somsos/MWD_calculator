@@ -22,8 +22,8 @@
       <div class="history-row history-item" (click)="onRecordClick(i)">
         <div style='min-width: 140px;'>{{ item.createdAt | date: 'short' }}</div>
         <div>
-          {{ (i === 0) ? "Ejemplo" : i }}
-          <svg style='margin-left: 5px;' *ngIf="i !== 0" (click)="onClickCleanOne(i); $event.stopPropagation()"
+          {{ indexInExampleRange(i) ? "Ejemplo" + (i+1) : i }}
+          <svg style='margin-left: 5px;' *ngIf="!indexInExampleRange(i)" (click)="onClickCleanOne(i); $event.stopPropagation()"
             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
             viewBox="0 0 16 16">
             <path

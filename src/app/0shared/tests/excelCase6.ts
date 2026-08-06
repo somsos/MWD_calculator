@@ -1,4 +1,4 @@
-import { TestCalcCaseData } from "../../core/internals/logic/CalculatorImpl_utils.spec";
+import { TestCalcCaseData } from "../internals/types/TestCalcCaseData";
 import { baseDiaTamizExcel } from "./baseDiaTamizExcel";
 
 export const excelCase6: TestCalcCaseData = {

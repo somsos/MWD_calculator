@@ -1,16 +1,10 @@
 import { IRowSample, MapSamples } from "../../../0shared";
+import { TestCalcCaseData } from "../../../0shared/internals/types/TestCalcCaseData";
 import { NumberUtils } from "../../../0shared/internals/utils/NumberUtils";
 import { CalculatorImpl } from "./CalculatorImpl";
 import { ICalculator } from "./ICalculator";
 
-export interface TestCalcCaseData {
-  inputSamples: MapSamples
-  MWDTotalExpected: number;
-  expectedWeight: number;
-  soilWeightsExpected: number[];
-  soilPortionsExpected: number[];
-  MWDsExpected: number[];
-}
+
 
 
 export function testCalc(tCase: TestCalcCaseData) {

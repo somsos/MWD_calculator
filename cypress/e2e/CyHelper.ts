@@ -1,6 +1,4 @@
-
-import { TestCalcCaseData } from "../../src/app/core/internals/logic/CalculatorImpl_utils.spec";
-
+import { TestCalcCaseData } from "../../src/app/0shared/internals/types/TestCalcCaseData";
 
 export function testUICalc(cy: Cypress.cy, excelCase: TestCalcCaseData) {
     const result:string = excelCase.MWDTotalExpected.toString();

@@ -1,6 +1,13 @@
 import { Injectable } from "@angular/core";
 import { MapSamples } from "../../0shared";
 import { BehaviorSubject, Observable } from "rxjs";
+import { mineCase1 } from "../../0shared/tests/mineCase1";
+import { excelCase1 } from "../../0shared/tests/excelCase1";
+import { excelCase2 } from "../../0shared/tests/excelCase2";
+import { excelCase3 } from "../../0shared/tests/excelCase3";
+import { excelCase4 } from "../../0shared/tests/excelCase4";
+import { excelCase5 } from "../../0shared/tests/excelCase5";
+import { excelCase6 } from "../../0shared/tests/excelCase6";
 
 export interface IMapSamplesHistoryService {
 
@@ -19,7 +26,7 @@ export interface ISampleRecord {
 @Injectable({ providedIn: "root" })
 export class MapSamplesHistoryServiceImpl implements IMapSamplesHistoryService {
 
-  private readonly _allSamples$ = new BehaviorSubject<ISampleRecord[]>([this.getExample()]);
+  private readonly _allSamples$ = new BehaviorSubject<ISampleRecord[]>([...this.getExamples()]);
 
 
   addSamplesRecord(newRecord: ISampleRecord): void {
@@ -59,7 +66,7 @@ export class MapSamplesHistoryServiceImpl implements IMapSamplesHistoryService {
 
 
   cleanAll(): void {
-    this._allSamples$.next([this.getExample()]);
+    this._allSamples$.next([...this.getExamples()]);
   }
 
   cleanOne(index: number): void {
@@ -71,21 +78,38 @@ export class MapSamplesHistoryServiceImpl implements IMapSamplesHistoryService {
     this._allSamples$.next(currentSamples);
   }
 
-  getExample(): ISampleRecord {
-    return {
-      sample: new Map([
-        [ 0, { tamizDiameter: 8.0,   soilWeight:   0.0    }  ],
-        [ 1, { tamizDiameter: 4.0,   soilWeight:   3.4    }  ],
-        [ 2, { tamizDiameter: 2.0, soilWeight:   21.26  }  ],
-        [ 3, { tamizDiameter: 1.0, soilWeight:   34.73  }  ],
-        [ 4, { tamizDiameter: 0.5, soilWeight:   35.69  }  ],
-        [ 5, { tamizDiameter: 0.25, soilWeight:  31.31  }  ],
-        [ 6, { tamizDiameter: 0.053, soilWeight: 38.26  }  ],
-        [ 7, { tamizDiameter: 0.0, soilWeight:   25.37  }  ],
-      ]),
-      result: 0.953859829,
-      createdAt: new Date("2025-04-07T18:50:00-06:00"),
-    }
+  getExamples(): ISampleRecord[] {
+    return [
+      {
+        sample: mineCase1.inputSamples,
+        result: Number(mineCase1.MWDTotalExpected.toFixed(4)),
+        createdAt: new Date("2026-08-05T21:01:21-06:00"),
+      }, {
+        sample: excelCase1.inputSamples,
+        result: Number(excelCase1.MWDTotalExpected.toFixed(4)),
+        createdAt: new Date("2025-04-07T18:50:00-06:00"),
+      },  {
+        sample: excelCase2.inputSamples,
+        result: Number(excelCase2.MWDTotalExpected.toFixed(4)),
+        createdAt: new Date("2026-08-05T21:01:21-06:00"),
+      },  {
+        sample: excelCase3.inputSamples,
+        result: Number(excelCase3.MWDTotalExpected.toFixed(4)),
+        createdAt: new Date("2026-08-05T21:01:21-06:00"),
+      },  {
+        sample: excelCase4.inputSamples,
+        result: Number(excelCase4.MWDTotalExpected.toFixed(4)),
+        createdAt: new Date("2026-08-05T21:01:21-06:00"),
+      },  {
+        sample: excelCase5.inputSamples,
+        result: Number(excelCase5.MWDTotalExpected.toFixed(4)),
+        createdAt: new Date("2026-08-05T21:01:21-06:00"),
+      },  {
+        sample: excelCase6.inputSamples,
+        result: Number(excelCase6.MWDTotalExpected.toFixed(4)),
+        createdAt: new Date("2026-08-05T21:01:21-06:00"),
+      }
+    ]
   }
 
 }
